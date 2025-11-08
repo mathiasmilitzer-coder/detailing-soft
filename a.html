@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editierbare und Filterbare Dienstleistungen</title>
+    <style>
+        /* Global Reset & Base Styles */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 40px;
+            background-color: #eef1f6;
+            color: #333;
+        }
+
+        /* --- Überschriften & Allgemein --- */
+        h1 { 
+            color: #2c3e50; 
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        /* --- Steuerelemente (Filter Box) --- */
+        .controls { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 25px; 
+            margin-bottom: 30px; 
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            align-items: center;
+        }
+        .controls label { 
+            font-weight: 600; 
+            color: #34495e; 
+            white-space: nowrap;
+        }
+        .controls select, .controls button {
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid #c8d3e2;
+            background-color: #f7f9fc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+        .controls select:hover, .controls button:hover {
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+        .edit-hint {
+            margin-left: auto; 
+            color: #e74c3c; 
+            font-weight: 500;
+            font-style: italic;
+            padding: 5px 10px;
+            background-color: #ffeaea;
+            border-radius: 4px;
+        }
+
+        /* --- TABLETTEN & PC ANSICHT (Standard/Desktop CSS) --- */
+        table { 
+            width: 100%; 
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            table-layout: fixed; /* Verbessert Spaltenbreiten-Management */
+        }
+        
+        th { 
+            background-color: #3498db;
+            color: white;
+            font-weight: 600;
+            padding: 12px 15px;
+            text-align: left;
+            position: sticky; 
+            top: 0;
+            z-index: 10;
+        }
+
+        td { 
+            border-bottom: 1px solid #ebf1f6;
+            padding: 12px 15px; 
+            text-align: left;
+            vertical-align: top;
+            transition: background-color 0.2s;
+            word-wrap: break-word; /* Lange Wörter brechen */
+        }
+        
+        tbody tr:hover {
+            background-color: #f5f8fb;
+        }
+
+        /* Spezielle Spalten Formatierung (Desktop) */
+        .text-right { 
+            text-align: right; 
+            white-space: nowrap; 
+            font-weight: 600;
+            color: #27ae60;
+            min-width: 100px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        
+        [contenteditable="true"] {
+            cursor: text;
+            border-radius: 4px;
+            min-height: 20px;
+        }
+
+        [contenteditable="true"]:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #e74c3c;
+            background-color: #fff9f9;
+        }
+        
+        /* --- MOBILE ANSICHT (Media Query für kleine Bildschirme) --- */
+        @media (max-width: 850px) {
+            body {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+            }
+            .edit-hint {
+                margin-left: 0;
+                text-align: center;
+                order: -1; /* Setze Hinweis nach oben */
+            }
+            .controls select {
+                 min-width: 100%;
+            }
+
+            /* Tabelle in Listenansicht umwandeln */
+            table, thead, tbody, th, td, tr { 
+                display: block; /* Mache alle Tabellen-Elemente zu Blöcken */
+            }
+            
+            /* Kopfzeile verstecken */
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            
+            /* Zeilen als "Karten" darstellen */
+            tr {
+                border: 1px solid #ccc;
+                margin-bottom: 10px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                overflow: hidden;
+                padding: 10px;
+                background-color: white;
+            }
+            
+            /* Zellen (td) formatieren */
+            td {
+                border: none;
+                border-bottom: 1px dotted #eee; /* Leichte Trennung zwischen Feldern */
+                position: relative;
+                padding-left: 50%; /* Platz für das Label (Daten-Attribut) */
+                text-align: right;
+                font-size: 14px;
+                line-height: 1.5;
+            }
+            
+            /* Pseudo-Element für das Label (Spaltenname) */
+            td:before {
+                /* Setze den Spaltennamen als Label links */
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+                color: #555;
+            }
+
+            /* Spezielle Formatierung für Preise in Mobilansicht */
+            td.text-right {
+                text-align: right;
+                color: #27ae60; 
+            }
+            
+            /* Die letzte Zelle (Brutto) besonders hervorheben */
+            tr td:last-child {
+                border-bottom: 0;
+                padding-top: 15px;
+                font-size: 1.1em;
+                font-weight: bold;
+                background-color: #f7f9fc;
+                border-radius: 0 0 8px 8px; /* Nur unten abrunden */
+                margin: -10px -10px -10px -10px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📋 Übersicht Fahrzeugdienstleistungen</h1>
+    
+    <div class="controls">
+        <label for="filterFahrzeugart">Fahrzeugart filtern:</label>
+        <select id="filterFahrzeugart" onchange="filterTable()">
+            <option value="">Alle Fahrzeugarten</option>
+        </select>
+
+        <label for="filterOrt">Ort filtern:</label>
+        <select id="filterOrt" onchange="filterTable()">
+            <option value="">Alle Orte</option>
+        </select>
+        
+        <span class="edit-hint">
+            ➡️ **Tipp:** Klicken Sie in eine Zelle zum Bearbeiten!
+        </span>
+    </div>
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th class="text-center" style="width: 100px;">Art.-Nr.</th>
+                <th style="width: 20%;">Dienstleistung</th>
+                <th style="width: 40%;">Beschreibung</th>
+                <th style="width: 100px;">Fahrzeugart</th>
+                <th style="width: 100px;">Ort</th>
+                <th style="width: 80px;">Einheit</th>
+                <th style="width: 80px;">Steuerart</th>
+                <th class="text-right" style="width: 120px;">VK (Netto)</th>
+                <th class="text-right" style="width: 120px;">VK (Brutto)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-fahrzeugart="Bus" data-ort="Innen">
+                <td class="text-center" contenteditable="true" data-label="Art.-Nr."></td>
+                <td contenteditable="true" data-label="Dienstleistung">(BUS) Fahrzeuginnereinigung</td>
+                <td contenteditable="true" data-label="Beschreibung">Cockpitpflege (...) Scheibenreinigung (...) Teppichreinigung (...)</td>
+                <td contenteditable="true" data-label="Fahrzeugart">Bus</td>
+                <td contenteditable="true" data-label="Ort">Innen</td>
+                <td contenteditable="true" data-label="Einheit">Stück</td>
+                <td data-label="Steuerart">USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)" data-label="VK (Netto)">83,99</td>
+                <td class="text-right brutto-price" data-label="VK (Brutto)">99,95</td>
+            </tr>
+            <tr data-fahrzeugart="Bus" data-ort="Außen">
+                <td class="text-center" contenteditable="true" data-label="Art.-Nr."></td>
+                <td contenteditable="true" data-label="Dienstleistung">(BUS) Lackaufbereitung</td>
+                <td contenteditable="true" data-label="Beschreibung">- Pflege aller Kunststoffteile (...) - Reifenpflege - Schleifpolitur (...)</td>
+                <td contenteditable="true" data-label="Fahrzeugart">Bus</td>
+                <td contenteditable="true" data-label="Ort">Außen</td>
+                <td contenteditable="true" data-label="Einheit">Stück</td>
+                <td data-label="Steuerart">USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)" data-label="VK (Netto)">168,03</td>
+                <td class="text-right brutto-price" data-label="VK (Brutto)">199,95</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true" data-label="Art.-Nr."></td>
+                <td contenteditable="true" data-label="Dienstleistung">(Bus) Fahrzeugaufbereitung</td>
+                <td contenteditable="true" data-label="Beschreibung">- Fahrzeug Komplettpflege - Innenreinigung - Polsterreinigung (...)</td>
+                <td contenteditable="true" data-label="Fahrzeugart">NA</td>
+                <td contenteditable="true" data-label="Ort">Unspezifiziert</td>
+                <td contenteditable="true" data-label="Einheit">Stück</td>
+                <td data-label="Steuerart">USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)" data-label="VK (Netto)">250,00</td>
+                <td class="text-right brutto-price" data-label="VK (Brutto)">297,50</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="Außen">
+                <td class="text-center" contenteditable="true" data-label="Art.-Nr."></td>
+                <td contenteditable="true" data-label="Dienstleistung">Scheinwerfer Aufbereitung</td>
+                <td contenteditable="true" data-label="Beschreibung">Scheinwerfer Instandsetzung Schleifarbeiten, Polieren und Beschichten</td>
+                <td contenteditable="true" data-label="Fahrzeugart">Sonstige</td>
+                <td contenteditable="true" data-label="Ort">Außen</td>
+                <td contenteditable="true" data-label="Einheit">Stück</td>
+                <td data-label="Steuerart">USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)" data-label="VK (Netto)">84,03</td>
+                <td class="text-right brutto-price" data-label="VK (Brutto)">100,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="">
+                <td class="text-center" contenteditable="true" data-label="Art.-Nr."></td>
+                <td contenteditable="true" data-label="Dienstleistung">Tankservice Siehe Quittungskopie</td>
+                <td contenteditable="true" data-label="Beschreibung"></td>
+                <td contenteditable="true" data-label="Fahrzeugart">Sonstige</td>
+                <td contenteditable="true" data-label="Ort"></td>
+                <td contenteditable="true" data-label="Einheit">Stück</td>
+                <td data-label="Steuerart">USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)" data-label="VK (Netto)">0,00</td>
+                <td class="text-right brutto-price" data-label="VK (Brutto)">0,00</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true" data-label="Art.-Nr."></td>
+                <td contenteditable="true" data-label="Dienstleistung">Verzugszinsen</td>
+                <td contenteditable="true" data-label="Beschreibung">Bei Zahlungsverzug behalten wir uns vor, gemäß §288 BGB Abs. 2 Verzugszinsen (...)</td>
+                <td contenteditable="true" data-label="Fahrzeugart">NA</td>
+                <td contenteditable="true" data-label="Ort"></td>
+                <td contenteditable="true" data-label="Einheit">Stück</td>
+                <td data-label="Steuerart">USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)" data-label="VK (Netto)">0,00</td>
+                <td class="text-right brutto-price" data-label="VK (Brutto)">0,00</td>
+            </tr>
+            </tbody>
+    </table>
+    
+    <script>
+        // --- Konstanten ---
+        const USt_SATZ = 1.19;
+        
+        // --- Hilfsfunktion: Fügt data-label Attribute zu Zellen hinzu ---
+        function addDataLabels() {
+            const table = document.getElementById('dataTable');
+            const headers = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent);
+            const rows = table.querySelectorAll('tbody tr');
+            
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                cells.forEach((cell, index) => {
+                    // Fügt das data-label basierend auf dem Tabellen-Header hinzu
+                    if (!cell.hasAttribute('data-label')) {
+                        cell.setAttribute('data-label', headers[index]);
+                    }
+                });
+            });
+        }
+        
+
+        // --- 1. Initialisierung der Filteroptionen & Data Labels ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const table = document.getElementById('dataTable');
+            const rows = table.querySelectorAll('tbody tr');
+            const fahrzeugarten = new Set();
+            const orte = new Set();
+            
+            // Füge die data-label Attribute hinzu (wichtig für responsive Ansicht!)
+            addDataLabels();
+
+            rows.forEach(row => {
+                const fzArt = row.getAttribute('data-fahrzeugart');
+                const ort = row.getAttribute('data-ort');
+                if (fzArt) fahrzeugarten.add(fzArt);
+                if (ort) orte.add(ort);
+            });
+
+            // Füllt die Select-Boxen
+            const filterFzArt = document.getElementById('filterFahrzeugart');
+            [...fahrzeugarten].sort().forEach(art => {
+                const option = document.createElement('option');
+                option.value = art;
+                option.textContent = art === 'NA' ? 'Sonstige/Unbekannt' : art;
+                filterFzArt.appendChild(option);
+            });
+
+            const filterOrt = document.getElementById('filterOrt');
+            [...orte].sort().forEach(ort => {
+                const option = document.createElement('option');
+                option.value = ort;
+                option.textContent = ort === '' ? 'Unspezifiziert' : (ort.charAt(0).toUpperCase() + ort.slice(1));
+                filterOrt.appendChild(option);
+            });
+            
+            // Initiales Setzen der Brutto-Preise 
+            rows.forEach(row => {
+                 const nettoCell = row.querySelector('.editable-price');
+                 if (nettoCell) {
+                     updateBrutto(nettoCell);
+                 }
+            });
+        });
+
+        // --- 2. Filterfunktion (unverändert) ---
+        window.filterTable = function() {
+            const selectedFzArt = document.getElementById('filterFahrzeugart').value;
+            const selectedOrt = document.getElementById('filterOrt').value;
+            const table = document.getElementById('dataTable');
+            const rows = table.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                const fzArt = row.getAttribute('data-fahrzeugart');
+                const ort = row.getAttribute('data-ort');
+
+                const matchesFzArt = !selectedFzArt || fzArt === selectedFzArt;
+                const matchesOrt = !selectedOrt || ort === selectedOrt;
+
+                if (matchesFzArt && matchesOrt) {
+                    row.style.display = 'block'; // Auf Mobilgeräten als Block anzeigen
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+            // Wenn kein Filter aktiv ist, wird die Anzeige wieder auf den Standard (display: block für Mobil, '' für Desktop) gesetzt.
+            if (!selectedFzArt && !selectedOrt) {
+                // Bei Desktop-Ansicht (über 850px) wird display: block von der Media Query ignoriert
+                // und die Standard-Tabellen-Anzeige übernommen.
+                const rows = table.querySelectorAll('tbody tr');
+                rows.forEach(row => row.style.display = 'block'); 
+            }
+        };
+
+
+        // --- 3. Update Brutto-Preis Funktion (unverändert) ---
+        window.updateBrutto = function(nettoCell) {
+            const nettoValueText = nettoCell.textContent.replace(/[^0-9,.]/g, '').replace(',', '.'); 
+            const nettoPrice = parseFloat(nettoValueText);
+            const bruttoCell = nettoCell.nextElementSibling;
+
+            if (!isNaN(nettoPrice)) {
+                const bruttoPrice = nettoPrice * USt_SATZ;
+                bruttoCell.textContent = bruttoPrice.toFixed(2).replace('.', ',');
+            } else {
+                bruttoCell.textContent = "0,00";
+            }
+        };
+    </script>
+
+</body>
+</html>
