@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Übersicht der Fahrzeugdienstleistungen</title>
+    <title>Übersicht der Fahrzeugdienstleistungen (Netto & Brutto)</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
         table { 
             width: 100%; 
             border-collapse: collapse; 
@@ -18,18 +19,26 @@
             vertical-align: top;
         }
         th { 
-            background-color: #f2f2f2; 
+            background-color: #007bff; /* Blaue Kopfzeile */
+            color: white;
             font-weight: bold;
+            position: sticky; /* Kopfzeile klebt beim Scrollen */
+            top: 0;
+            z-index: 10;
         }
         tr:nth-child(even) { 
-            background-color: #f9f9f9; 
+            background-color: #f2f2f2; 
         }
-        .text-right { text-align: right; }
+        /* Formatierung für Preisspalten */
+        .text-right { 
+            text-align: right; 
+            white-space: nowrap; /* Verhindert Zeilenumbruch bei Preisen */
+        }
     </style>
 </head>
 <body>
 
-    <h1>Übersicht Fahrzeugdienstleistungen (Netto-Preise)</h1>
+    <h1>Übersicht Fahrzeugdienstleistungen (Preise inkl. 19% USt)</h1>
     
     <table>
         <thead>
@@ -42,6 +51,7 @@
                 <th>Einheit</th>
                 <th>Steuerart</th>
                 <th class="text-right">VK (Netto)</th>
+                <th class="text-right">VK (Brutto)</th>
             </tr>
         </thead>
         <tbody>
@@ -54,6 +64,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">83,99</td>
+                <td class="text-right">99,95</td>
             </tr>
             <tr>
                 <td></td>
@@ -64,6 +75,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">168,03</td>
+                <td class="text-right">199,95</td>
             </tr>
             <tr>
                 <td></td>
@@ -74,6 +86,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">250,00</td>
+                <td class="text-right">297,50</td>
             </tr>
             <tr>
                 <td></td>
@@ -84,6 +97,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">83,99</td>
+                <td class="text-right">99,95</td>
             </tr>
             <tr>
                 <td></td>
@@ -94,6 +108,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -104,6 +119,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">83,99</td>
+                <td class="text-right">99,95</td>
             </tr>
             <tr>
                 <td></td>
@@ -114,6 +130,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">67,18</td>
+                <td class="text-right">80,04</td>
             </tr>
             <tr>
                 <td></td>
@@ -124,6 +141,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">545,38</td>
+                <td class="text-right">649,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -134,6 +152,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">100,84</td>
+                <td class="text-right">120,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -144,6 +163,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">117,65</td>
+                <td class="text-right">140,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -154,6 +174,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">83,99</td>
+                <td class="text-right">99,95</td>
             </tr>
             <tr>
                 <td></td>
@@ -164,6 +185,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">75,50</td>
+                <td class="text-right">89,85</td>
             </tr>
             <tr>
                 <td></td>
@@ -174,6 +196,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">125,00</td>
+                <td class="text-right">148,75</td>
             </tr>
             <tr>
                 <td></td>
@@ -184,6 +207,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">230,00</td>
+                <td class="text-right">273,70</td>
             </tr>
             <tr>
                 <td></td>
@@ -194,6 +218,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">377,31</td>
+                <td class="text-right">449,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -204,6 +229,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">210,08</td>
+                <td class="text-right">250,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -214,6 +240,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">165,00</td>
+                <td class="text-right">196,35</td>
             </tr>
             <tr>
                 <td></td>
@@ -224,6 +251,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">270,00</td>
+                <td class="text-right">321,30</td>
             </tr>
             <tr>
                 <td></td>
@@ -234,6 +262,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">546,22</td>
+                <td class="text-right">650,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -244,6 +273,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -254,6 +284,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">67,18</td>
+                <td class="text-right">80,04</td>
             </tr>
             <tr>
                 <td></td>
@@ -264,6 +295,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -274,6 +306,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -284,6 +317,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">142,82</td>
+                <td class="text-right">170,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -294,6 +328,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -304,6 +339,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">293,82</td>
+                <td class="text-right">349,75</td>
             </tr>
             <tr>
                 <td></td>
@@ -314,6 +350,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">83,99</td>
+                <td class="text-right">99,95</td>
             </tr>
             <tr>
                 <td></td>
@@ -324,6 +361,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">67,18</td>
+                <td class="text-right">80,04</td>
             </tr>
             <tr>
                 <td></td>
@@ -334,6 +372,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -344,6 +383,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">75,58</td>
+                <td class="text-right">90,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -354,6 +394,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">630,25</td>
+                <td class="text-right">750,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -364,6 +405,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -374,6 +416,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">67,18</td>
+                <td class="text-right">80,04</td>
             </tr>
             <tr>
                 <td></td>
@@ -384,6 +427,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -394,6 +438,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -404,6 +449,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">142,82</td>
+                <td class="text-right">170,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -414,6 +460,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -424,6 +471,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">293,28</td>
+                <td class="text-right">348,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -434,6 +482,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">83,99</td>
+                <td class="text-right">99,95</td>
             </tr>
             <tr>
                 <td></td>
@@ -444,6 +493,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">67,18</td>
+                <td class="text-right">80,04</td>
             </tr>
             <tr>
                 <td></td>
@@ -454,6 +504,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -464,6 +515,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">75,50</td>
+                <td class="text-right">89,85</td>
             </tr>
             <tr>
                 <td></td>
@@ -474,6 +526,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">235,00</td>
+                <td class="text-right">279,65</td>
             </tr>
             <tr>
                 <td></td>
@@ -484,6 +537,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">70,00</td>
+                <td class="text-right">83,30</td>
             </tr>
             <tr>
                 <td></td>
@@ -494,6 +548,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">462,18</td>
+                <td class="text-right">550,00</td>
             </tr>
             <tr>
                 <td>100</td>
@@ -504,6 +559,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">140,00</td>
+                <td class="text-right">166,60</td>
             </tr>
             <tr>
                 <td></td>
@@ -514,6 +570,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -524,6 +581,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">50,37</td>
+                <td class="text-right">59,94</td>
             </tr>
             <tr>
                 <td></td>
@@ -534,6 +592,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -544,6 +603,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -554,6 +614,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">126,05</td>
+                <td class="text-right">150,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -564,6 +625,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,77</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -574,6 +636,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">251,26</td>
+                <td class="text-right">299,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -584,6 +647,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">83,99</td>
+                <td class="text-right">99,95</td>
             </tr>
             <tr>
                 <td></td>
@@ -594,6 +658,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -604,6 +669,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,77</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -614,6 +680,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">50,38</td>
+                <td class="text-right">60,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -624,6 +691,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">1638,66</td>
+                <td class="text-right">1950,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -634,6 +702,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">75,00</td>
+                <td class="text-right">89,25</td>
             </tr>
             <tr>
                 <td></td>
@@ -644,6 +713,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">798,32</td>
+                <td class="text-right">950,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -654,6 +724,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">150,00</td>
+                <td class="text-right">178,50</td>
             </tr>
             <tr>
                 <td></td>
@@ -664,6 +735,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">67,18</td>
+                <td class="text-right">80,04</td>
             </tr>
             <tr>
                 <td></td>
@@ -674,6 +746,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">67,18</td>
+                <td class="text-right">80,04</td>
             </tr>
             <tr>
                 <td></td>
@@ -684,6 +757,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,78</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -694,6 +768,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">67,18</td>
+                <td class="text-right">80,04</td>
             </tr>
             <tr>
                 <td></td>
@@ -704,6 +779,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">151,22</td>
+                <td class="text-right">180,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -714,6 +790,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">67,18</td>
+                <td class="text-right">80,04</td>
             </tr>
             <tr>
                 <td></td>
@@ -724,6 +801,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">420,16</td>
+                <td class="text-right">500,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -734,6 +812,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">83,99</td>
+                <td class="text-right">99,95</td>
             </tr>
             <tr>
                 <td></td>
@@ -744,6 +823,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">117,65</td>
+                <td class="text-right">140,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -754,6 +834,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">67,18</td>
+                <td class="text-right">80,04</td>
             </tr>
             <tr>
                 <td></td>
@@ -764,6 +845,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">75,59</td>
+                <td class="text-right">90,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -774,6 +856,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">180,00</td>
+                <td class="text-right">214,20</td>
             </tr>
             <tr>
                 <td></td>
@@ -784,6 +867,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">1764,71</td>
+                <td class="text-right">2100,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -794,6 +878,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">1764,71</td>
+                <td class="text-right">2100,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -804,6 +889,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">168,03</td>
+                <td class="text-right">200,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -814,6 +900,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">1176,47</td>
+                <td class="text-right">1400,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -824,6 +911,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">126,05</td>
+                <td class="text-right">150,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -834,6 +922,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">420,17</td>
+                <td class="text-right">500,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -844,6 +933,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">210,08</td>
+                <td class="text-right">250,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -854,6 +944,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">69,00</td>
+                <td class="text-right">82,11</td>
             </tr>
             <tr>
                 <td></td>
@@ -864,6 +955,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">32,77</td>
+                <td class="text-right">39,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -874,6 +966,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">50,42</td>
+                <td class="text-right">60,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -884,6 +977,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">70,58</td>
+                <td class="text-right">84,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -894,6 +988,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">75,63</td>
+                <td class="text-right">90,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -904,6 +999,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">49,58</td>
+                <td class="text-right">59,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -914,6 +1010,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">16,81</td>
+                <td class="text-right">20,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -924,6 +1021,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">150,00</td>
+                <td class="text-right">178,50</td>
             </tr>
             <tr>
                 <td></td>
@@ -934,6 +1032,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">300,00</td>
+                <td class="text-right">357,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -944,6 +1043,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">45,00</td>
+                <td class="text-right">53,55</td>
             </tr>
             <tr>
                 <td></td>
@@ -954,6 +1054,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">60,00</td>
+                <td class="text-right">71,40</td>
             </tr>
             <tr>
                 <td></td>
@@ -964,6 +1065,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">33,61</td>
+                <td class="text-right">40,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -973,6 +1075,7 @@
                 <td></td>
                 <td>Stück</td>
                 <td>USt19</td>
+                <td class="text-right">0,00</td>
                 <td class="text-right">0,00</td>
             </tr>
             <tr>
@@ -984,6 +1087,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">25,00</td>
+                <td class="text-right">29,75</td>
             </tr>
             <tr>
                 <td></td>
@@ -994,6 +1098,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">57,98</td>
+                <td class="text-right">69,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -1004,6 +1109,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">19,50</td>
+                <td class="text-right">23,21</td>
             </tr>
             <tr>
                 <td></td>
@@ -1014,6 +1120,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">39,96</td>
+                <td class="text-right">47,55</td>
             </tr>
             <tr>
                 <td></td>
@@ -1024,6 +1131,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">19,50</td>
+                <td class="text-right">23,21</td>
             </tr>
             <tr>
                 <td></td>
@@ -1034,6 +1142,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">18,00</td>
+                <td class="text-right">21,42</td>
             </tr>
             <tr>
                 <td></td>
@@ -1044,6 +1153,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">4,20</td>
+                <td class="text-right">5,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -1054,6 +1164,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">39,95</td>
+                <td class="text-right">47,54</td>
             </tr>
             <tr>
                 <td></td>
@@ -1064,6 +1175,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,82</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -1074,6 +1186,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">58,77</td>
+                <td class="text-right">70,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -1084,6 +1197,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">152,00</td>
+                <td class="text-right">180,88</td>
             </tr>
             <tr>
                 <td></td>
@@ -1093,6 +1207,7 @@
                 <td></td>
                 <td>Stück</td>
                 <td>USt19</td>
+                <td class="text-right">0,00</td>
                 <td class="text-right">0,00</td>
             </tr>
             <tr>
@@ -1104,6 +1219,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">84,03</td>
+                <td class="text-right">100,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -1114,6 +1230,7 @@
                 <td>Stück</td>
                 <td>USt19</td>
                 <td class="text-right">0,00</td>
+                <td class="text-right">0,00</td>
             </tr>
             <tr>
                 <td></td>
@@ -1123,6 +1240,7 @@
                 <td></td>
                 <td>Stück</td>
                 <td>USt19</td>
+                <td class="text-right">0,00</td>
                 <td class="text-right">0,00</td>
             </tr>
         </tbody>
