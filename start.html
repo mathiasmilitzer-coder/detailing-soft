@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DetailinSoft Responsive</title>
+    <title>DetailinSoft Dynamisch</title>
     <style>
-        /* BASE STYLES FÜR ALLE GERÄTE */
+        /* DYNAMISCHE SCHRIFTGRÖßEN MIT CLAMP UND VW */
+
+        /*
+         * clamp(MINIMALWERT, BEVORZUGTER_WERT_VW, MAXIMALWERT)
+         * Die Schriftgröße liegt immer zwischen dem Minimal- und Maximalwert.
+         * Der bevorzugte Wert (vw-Einheit) skaliert die Schrift fließend.
+         */
+
+        /* BASE STYLES */
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -15,7 +23,7 @@
             min-height: 100vh;
             margin: 0;
             padding: 20px;
-            text-align: center; /* Zentriert alles, was nicht durch Flexbox zentriert wird */
+            text-align: center;
         }
 
         /* HEADER ANPASSUNGEN */
@@ -25,22 +33,26 @@
 
         /* Farbanpassung für Detailing - Soft */
         .blue-part {
-            color: #007bff; /* Ein helles Blau */
+            color: #007bff; /* Blau */
         }
         .red-part {
-            color: #dc3545; /* Ein helles Rot */
+            color: #dc3545; /* Rot */
         }
 
-        /* Detailing - Soft (h1) Größe für große Bildschirme */
+        /* Detailin - Soft (h1) */
         .header-content h1 {
-            font-size: 8em;
+            /* Die Schriftgröße skaliert zwischen 40px und 100px, 
+               passt sich aber dynamisch mit 8vw an die Bildschirmbreite an. */
+            font-size: clamp(40px, 8vw, 100px);
             margin-bottom: 0.1em;
             line-height: 1.1;
         }
 
-        /* Willkommen (p) Größe: Verdoppelt (3em statt 1.5em) */
+        /* Willkommen (p) */
         .header-content p {
-            font-size: 3em; /* Doppelt so groß wie zuvor */
+            /* Die Schriftgröße skaliert zwischen 24px und 48px, 
+               passt sich aber dynamisch mit 3vw an die Bildschirmbreite an. */
+            font-size: clamp(24px, 3vw, 48px);
             margin-top: 0;
         }
 
@@ -54,8 +66,9 @@
         }
 
         .button {
-            padding: 12px 25px; /* Etwas größere Buttons */
-            font-size: 1.3em;
+            padding: 12px 25px;
+            /* Button-Schrift skaliert etwas mit */
+            font-size: clamp(16px, 1.5vw, 20px); 
             text-decoration: none;
             color: white;
             background-color: #007bff;
@@ -71,30 +84,17 @@
             transform: translateY(-2px);
         }
 
-        /* DYNAMISCHE ANPASSUNG FÜR HANDY-ANSICHT (Responsive Design) */
-        @media (max-width: 600px) {
-            
-            /* Titelschrift deutlich verkleinern, damit sie auf den Bildschirm passt */
-            .header-content h1 {
-                font-size: 4em;
-            }
-
-            /* Willkommen-Schrift für Handyansicht anpassen */
-            .header-content p {
-                font-size: 1.8em;
-            }
-
-            /* Buttons untereinander anordnen */
+        /* Media Query zur Stapelung der Buttons auf sehr kleinen Bildschirmen */
+        @media (max-width: 480px) {
             .footer-buttons {
                 flex-direction: column;
                 gap: 15px;
                 padding-bottom: 20px;
-                width: 80%; /* Buttons nehmen mehr Breite ein */
+                width: 80%;
             }
 
             .button {
-                width: 100%; /* Buttons auf volle Breite setzen */
-                font-size: 1.2em;
+                width: 100%;
             }
         }
     </style>
