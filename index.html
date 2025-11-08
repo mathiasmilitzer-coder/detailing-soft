@@ -3,20 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dienstleistungsübersicht</title>
+    <title>Übersicht der Fahrzeugdienstleistungen</title>
     <style>
-        /* Optional: Grundlegendes CSS für bessere Lesbarkeit */
         body { font-family: Arial, sans-serif; margin: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; }
-        th { background-color: #f2f2f2; }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px;
+        }
+        th, td { 
+            border: 1px solid #ddd; 
+            padding: 8px; 
+            text-align: left;
+            vertical-align: top;
+        }
+        th { 
+            background-color: #f2f2f2; 
+            font-weight: bold;
+        }
+        tr:nth-child(even) { 
+            background-color: #f9f9f9; 
+        }
+        .text-right { text-align: right; }
     </style>
 </head>
 <body>
 
-    <h1>Übersicht der Fahrzeugdienstleistungen</h1>
-
-    <table id="dienstleistungsTabelle">
+    <h1>Übersicht Fahrzeugdienstleistungen (Netto-Preise)</h1>
+    
+    <table>
         <thead>
             <tr>
                 <th>Artikelnummer</th>
@@ -24,52 +39,1093 @@
                 <th>Beschreibung</th>
                 <th>Fahrzeugart</th>
                 <th>Ort</th>
-                <th>VK (Netto)</th>
+                <th>Einheit</th>
+                <th>Steuerart</th>
+                <th class="text-right">VK (Netto)</th>
             </tr>
         </thead>
         <tbody>
-            </tbody>
+            <tr>
+                <td></td>
+                <td>(BUS) Fahrzeuginnereinigung</td>
+                <td>Cockpitpflege (Reinigung und Pflege aller Kunststoffteile im Innenraum) Scheibenreinigung (Reinigung aller Scheiben innen) Teppichreinigung (Absaugen aller Polster sowie der Teppiche) Kofferraumreinigung (Aussaugen des Kofferraum und Pflege aller Kunststoffteile ) Türfalzen Reinigung (Reinigung aller Türfalzen und Rahmen mit Reinigungsmittel )</td>
+                <td>Bus</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">83,99</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(BUS) Lackaufbereitung</td>
+                <td>- Pflege aller Kunststoffteile im Außenbereich - Reifenpflege - Schleifpolitur - Antihologramm Politur - Scheibenreinigung</td>
+                <td>Bus</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">168,03</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Bus) Fahrzeugaufbereitung</td>
+                <td>- Fahrzeug Komplettpflege - Innenreinigung - Polsterreinigung oder Lederpflege - Fensterreinigung - Kockpitpflege, Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standart - Fahrzeugwäsche u. Felgenwäsche - inkl. Mannstunden und Material</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">250,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Bus) Geruchsentfernung</td>
+                <td>Behandlung des Fahrzeuginnenraumes mit Geruchskiller</td>
+                <td>Bus</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">83,99</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Bus) Himmel-Reinigung</td>
+                <td>Reinigung Himmel-Bereich mit Reiniger</td>
+                <td>Bus</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Bus) Hundehaarentfernung</td>
+                <td>Entfernung aller Tierhaare im Fahrzeuginnenraum</td>
+                <td>Bus</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">83,99</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Bus) Lederpflege</td>
+                <td>Reinigung und Pflege der Ledersitze und Seitenverkleidung</td>
+                <td>Bus</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">67,18</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Bus) Nano-Lack-Versiegelung</td>
+                <td>Kunststoffpflege aller Außenteile Pflege der Radkästen Reifenpflege Reinigung der Türfalzen Schleifpolieren auf allen Lackflächen soweit wie möglich Anti-Hologramm Polieren Entfettung Nano-Beschichtung Nano-Versiegelung Scheibenreinigung</td>
+                <td>Bus</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">545,38</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Bus) Nano-Scheiben-Versiegelung</td>
+                <td>Reinigung, Entfettung und Versiegelung der Windschutzscheibe im Außenbereich.</td>
+                <td>Bus</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">100,84</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Bus) Politur / Versiegelung</td>
+                <td>- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td>Bus</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">117,65</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Bus) Polsterreinigung</td>
+                <td>Reinigung aller Sitzpolster inkl. Fleckenentfnung</td>
+                <td>Bus</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">83,99</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Bus) Teppichaufbereitung</td>
+                <td>Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td>
+                <td>Bus</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">75,50</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Doblo-Klasse) Auslieferung GW/NW</td>
+                <td>Reinigung Außenbereich (Radkasten und Felgenreinigung, Fahrzeugwäsche inkl. Wachsversiegelung. Motorpflege und Reinigung Reinigung der Türfalzen Innenbereich (Cockpitpflege, Scheibenreinigung, Absaugen. Reinigung der Fussmatten Demontage Reklame inkl. Tankservice</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">125,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Doblo-Klasse) Fahrzeugaufbereitung</td>
+                <td>- Fahrzeug Komplettpflege - Innenreinigung - Polsterreinigung oder Lederpflege - Fensterreinigung - Kockpitpflege, Kunststoffpflege - Lackpflege / Politur / Versiegelung - Demontage Reklame - Kratzerentfernung Standart - Fahrzeugwäsche u. Felgenwäsche - inkl. Mannstunden und Material</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">230,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Ducato) Lackaufbereitung</td>
+                <td>- Pflege aller Kunststoffteile im Außenbereich - Reifenpflege - Schleifpolitur - Antihologramm Politur - Scheibenreinigung</td>
+                <td>Ducato</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">377,31</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Ducato) Politur / Versiegelung</td>
+                <td>- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td>Ducato</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">210,08</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Ducato-Klasse) Auslieferung GW/NW</td>
+                <td>Reinigung Außenbereich (Radkasten und Felgenreinigung, Fahrzeugwäsche inkl. Wachsversiegelung. Motorpflege und Reinigung Reinigung der Türfalzen Innenbereich (Cockpitpflege, Scheibenreinigung, Absaugen. Reinigung der Fussmatten Demontage Reklame inkl. Tankservice</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">165,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Ducato-Klasse) Fahrzeugaufbereitung</td>
+                <td>- Fahrzeug Komplettpflege - Innenreinigung - Polsterreinigung oder Lederpflege - Fensterreinigung - Kockpitpflege, Kunststoffpflege - Lackpflege / Politur / Versiegelung - Demontage Reklame - Kratzerentfernung Standart - Fahrzeugwäsche u. Felgenwäsche - inkl. Mannstunden und Material</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">270,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Kombi) Ceramic Versiegelung</td>
+                <td>Ceramic Allround C0.01 hochwertige Keramikversiegelung  und permanent Schutz. Eigenschaften der Ceramic Allround C0.01 + Langzeitschutz der Oberfläche mit einer Standzeit von 18-24 Monaten + Glatte, hydrophobe Oberfläche mit Lotuseffekt + Glanzstabil auch nach Einsatz von sauren und alkalischen Reinigern + Easy-To-Clean-Eigenschaften, sodass Schmutz schlechter haftet und die Oberfläche schonend gereinigt werden kann + Schutz der versiegelten Oberfläche vor Umwelteinflüssen wie UV-Strahlung, Streusalz, Vogelkot und Flugrost + Schutz des Klarlacks vor ätzenden und sauren Produkten im pH Bereich 5 bis 12</td>
+                <td>Kombi</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">546,22</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Kombi) Fahrzeuginnereinigung</td>
+                <td>Cockpitpflege (Reinigung und Pflege aller Kunststoffteile im Innenraum) Scheibenreinigung (Reinigung aller Scheiben innen) Teppichreinigung (Absaugen aller Polster sowie der Teppiche) Kofferraumreinigung (Aussaugen des Kofferraum und Pflege aller Kunststoffteile ) Türfalzen Reinigung (Reinigung aller Türfalzen und Rahmen mit Reinigungsmittel )</td>
+                <td>Kombi</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Kombi) Geruchsentfernung</td>
+                <td>Behandlung des Fahrzeuginnenraumes mit Geruchskiller</td>
+                <td>Kombi</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">67,18</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Kombi) Himmel-Reinigung</td>
+                <td>Reinigung Himmel-Bereich mit Reiniger</td>
+                <td>Kombi</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Kombi) Hundehaarentfernung</td>
+                <td>Entfernung aller Tierhaare im Fahrzeuginnenraum</td>
+                <td>Kombi</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Kombi) Lackaufbereitung</td>
+                <td>- Pflege aller Kunststoffteile im Außenbereich - Reifenpflege - Schleifpolitur - Antihologramm Politur - Scheibenreinigung</td>
+                <td>Kombi</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">142,82</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Kombi) Lederpflege</td>
+                <td>Reinigung und Pflege der Ledersitze und Seitenverkleidung</td>
+                <td>Kombi</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Kombi) Nano-Lack-Versiegelung</td>
+                <td>Kunststoffpflege aller Außenteile Pflege der Radkästen Reifenpflege Reinigung der Türfalzen Schleifpolieren auf allen Lackflächen soweit wie möglich Anti-Hologramm Polieren Entfettung Nano-Beschichtung Nano-Versiegelung Scheibenreinigung</td>
+                <td>Kombi</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">293,82</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Kombi) Nano-Scheiben-Versiegelung</td>
+                <td>Reinigung, Entfettung und Versiegelung der Windschutzscheibe im Außenbereich.</td>
+                <td>Kombi</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">83,99</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Kombi) Politur / Versiegelung</td>
+                <td>- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td>Kombi</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">67,18</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Kombi) Polsterreinigung</td>
+                <td>Reinigung aller Sitzpolster inkl. Fleckenentfnung</td>
+                <td>Kombi</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Kombi) Teppichaufbereitung</td>
+                <td>Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td>
+                <td>Kombi</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">75,58</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Limo) Ceramic Versiegelung</td>
+                <td>Ceramic Allround C0.01 hochwertige Keramikversiegelung  und permanent Schutz. Eigenschaften der Ceramic Allround C0.01 + Langzeitschutz der Oberfläche mit einer Standzeit von 18-24 Monaten + Glatte, hydrophobe Oberfläche mit Lotuseffekt + Glanzstabil auch nach Einsatz von sauren und alkalischen Reinigern + Easy-To-Clean-Eigenschaften, sodass Schmutz schlechter haftet und die Oberfläche schonend gereinigt werden kann + Schutz der versiegelten Oberfläche vor Umwelteinflüssen wie UV-Strahlung, Streusalz, Vogelkot und Flugrost + Schutz des Klarlacks vor ätzenden und sauren Produkten im pH Bereich 5 bis 12</td>
+                <td>Limo</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">630,25</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Limo) Fahrzeuginnereinigung</td>
+                <td>Cockpitpflege (Reinigung und Pflege aller Kunststoffteile im Innenraum) Scheibenreinigung (Reinigung aller Scheiben innen) Teppichreinigung (Absaugen aller Polster sowie der Teppiche) Kofferraumreinigung (Aussaugen des Kofferraum und Pflege aller Kunststoffteile ) Türfalzen Reinigung (Reinigung aller Türfalzen und Rahmen mit Reinigungsmittel )</td>
+                <td>Limo</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Limo) Geruchsentfernung</td>
+                <td>Behandlung des Fahrzeuginnenraumes mit Geruchskiller</td>
+                <td>Limo</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">67,18</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Limo) Himmel-Reinigung</td>
+                <td>Reinigung Himmel-Bereich mit Reiniger</td>
+                <td>Limo</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Limo) Hundehaarentfernung</td>
+                <td>Entfernung aller Tierhaare im Fahrzeuginnenraum</td>
+                <td>Limo</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Limo) Lackaufbereitung</td>
+                <td>- Pflege aller Kunststoffteile im Außenbereich - Reifenpflege - Schleifpolitur - Antihologramm Politur - Scheibenreinigung</td>
+                <td>Limo</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">142,82</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Limo) Lederpflege</td>
+                <td>Reinigung und Pflege der Ledersitze und Seitenverkleidung</td>
+                <td>Limo</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Limo) Nano-Lack-Versiegelung</td>
+                <td>Kunststoffpflege aller Außenteile Pflege der Radkästen Reifenpflege Reinigung der Türfalzen Schleifpolieren auf allen Lackflächen soweit wie möglich Anti-Hologramm Polieren Entfettung Nano-Beschichtung Nano-Versiegelung Scheibenreinigung</td>
+                <td>Limo</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">293,28</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Limo) Nano-Scheiben-Versiegelung</td>
+                <td>Reinigung, Entfettung und Versiegelung der Windschutzscheibe im Außenbereich.</td>
+                <td>Limo</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">83,99</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Limo) Politur / Versiegelung</td>
+                <td>- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td>Limo</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">67,18</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Limo) Polsterreinigung</td>
+                <td>Reinigung aller Sitzpolster inkl. Fleckenentfnung</td>
+                <td>Limo</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Limo) Teppichaufbereitung</td>
+                <td>Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td>
+                <td>Limo</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">75,50</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(MAN) Bus-Innenreinigung</td>
+                <td>Cockpitpflege (Reinigung und Pflege aller Kunststoffteile im Innenraum) Scheibenreinigung (Reinigung aller Scheiben innen und außen) Teppichreinigung (Absaugen aller Polster sowie der Teppiche) Kofferraumreinigung (Aussaugen des Kofferraum und Pflege aller Kunststoff- und Lackteile ) Türfalzen Reinigung (Reinigung aller Türfalzen und Rahmen mit Reinigungsmittel )</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">235,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(PKW) Auslieferung GW/NW</td>
+                <td>Reinigung Außenbereich (Radkasten und Felgenreinigung, Fahrzeugwäsche inkl. Wachsversiegelung. Motorpflege und Reinigung Reinigung der Türfalzen Innenbereich (Cockpitpflege, Scheibenreinigung, Absaugen. Reinigung der Fussmatten Demontage Reklame inkl. Tankservice</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">70,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(PKW) Ceramic Versiegelung</td>
+                <td>Ceramic Allround C0.01 hochwertige Keramikversiegelung  und permanent Schutz. Eigenschaften der Ceramic Allround C0.01 + Langzeitschutz der Oberfläche mit einer Standzeit von 18-24 Monaten + Glatte, hydrophobe Oberfläche mit Lotuseffekt + Glanzstabil auch nach Einsatz von sauren und alkalischen Reinigern + Easy-To-Clean-Eigenschaften, sodass Schmutz schlechter haftet und die Oberfläche schonend gereinigt werden kann + Schutz der versiegelten Oberfläche vor Umwelteinflüssen wie UV-Strahlung, Streusalz, Vogelkot und Flugrost + Schutz des Klarlacks vor ätzenden und sauren Produkten im pH Bereich 5 bis 12</td>
+                <td>PKW</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">462,18</td>
+            </tr>
+            <tr>
+                <td>100</td>
+                <td>(PKW) Fahrzeugaufbereitung</td>
+                <td>- Fahrzeug Komplettpflege - Innenreinigung - Polsterreinigung oder Lederpflege - Fensterreinigung - Kockpitpflege, Kunststoffpflege - Lackpflege / Politur / Versiegelung - Demontage Reklame - Kratzerentfernung Standart - Fahrzeugwäsche u. Felgenwäsche - inkl. Mannstunden und Material</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">140,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(PKW) Fahrzeuginnereinigung</td>
+                <td>Cockpitpflege (Reinigung und Pflege aller Kunststoffteile im Innenraum) Scheibenreinigung (Reinigung aller Scheiben innen) Teppichreinigung (Absaugen aller Polster sowie der Teppiche) Kofferraumreinigung (Aussaugen des Kofferraum und Pflege aller Kunststoffteile ) Türfalzen Reinigung (Reinigung aller Türfalzen und Rahmen mit Reinigungsmittel )</td>
+                <td>PKW</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(PKW) Geruchsentfernung</td>
+                <td>Behandlung des Fahrzeuginnenraumes mit Geruchskiller</td>
+                <td>PKW</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">50,37</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(PKW) Himmel-Reinigung</td>
+                <td>Reinigung Himmel-Bereich mit Reiniger</td>
+                <td>PKW</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(PKW) Hundehaarentfernung</td>
+                <td>Entfernung aller Tierhaare im Fahrzeuginnenraum</td>
+                <td>PKW</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(PKW) Lackaufbereitung</td>
+                <td>- Pflege aller Kunststoffteile im Außenbereich - Reifenpflege - Schleifpolitur - Antihologramm Politur - Scheibenreinigung</td>
+                <td>PKW</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">126,05</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(PKW) Lederpflege</td>
+                <td>Reinigung und Pflege der Ledersitze und Seitenverkleidung</td>
+                <td>PKW</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,77</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(PKW) Nano-Lack-Versiegelung</td>
+                <td>Kunststoffpflege aller Außenteile Pflege der Radkästen Reifenpflege Reinigung der Türfalzen Schleifpolieren auf allen Lackflächen soweit wie möglich Anti-Hologramm Polieren Entfettung Nano-Beschichtung Nano-Versiegelung Scheibenreinigung</td>
+                <td>PKW</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">251,26</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(PKW) Nano-Scheiben-Versiegelung</td>
+                <td>Reinigung, Entfettung und Versiegelung der Windschutzscheibe im Außenbereich.</td>
+                <td>PKW</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">83,99</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(PKW) Politur / Versiegelung</td>
+                <td>- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td>PKW</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(PKW) Polsterreinigung</td>
+                <td>Reinigung aller Sitzpolster inkl. Fleckenentfnung</td>
+                <td>PKW</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,77</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(PKW) Teppichaufbereitung</td>
+                <td>Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td>
+                <td>PKW</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">50,38</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SBus) Ceramic Versiegelung</td>
+                <td>Ceramic Allround C0.01 hochwertige Keramikversiegelung  und permanent Schutz. Eigenschaften der Ceramic Allround C0.01 + Langzeitschutz der Oberfläche mit einer Standzeit von 18-24 Monaten + Glatte, hydrophobe Oberfläche mit Lotuseffekt + Glanzstabil auch nach Einsatz von sauren und alkalischen Reinigern + Easy-To-Clean-Eigenschaften, sodass Schmutz schlechter haftet und die Oberfläche schonend gereinigt werden kann + Schutz der versiegelten Oberfläche vor Umwelteinflüssen wie UV-Strahlung, Streusalz, Vogelkot und Flugrost + Schutz des Klarlacks vor ätzenden und sauren Produkten im pH Bereich 5 bis 12</td>
+                <td>Bus</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">1638,66</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Auslieferung GW/NW</td>
+                <td>Reinigung Außenbereich (Radkasten und Felgenreinigung, Fahrzeugwäsche inkl. Wachsversiegelung. Motorpflege und Reinigung Reinigung der Türfalzen Innenbereich (Cockpitpflege, Scheibenreinigung, Absaugen. Reinigung der Fussmatten Demontage Reklame inkl. Tankservice</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">75,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Ceramic Versiegelung</td>
+                <td>Ceramic Allround C0.01 hochwertige Keramikversiegelung  und permanent Schutz. Eigenschaften der Ceramic Allround C0.01 + Langzeitschutz der Oberfläche mit einer Standzeit von 18-24 Monaten + Glatte, hydrophobe Oberfläche mit Lotuseffekt + Glanzstabil auch nach Einsatz von sauren und alkalischen Reinigern + Easy-To-Clean-Eigenschaften, sodass Schmutz schlechter haftet und die Oberfläche schonend gereinigt werden kann + Schutz der versiegelten Oberfläche vor Umwelteinflüssen wie UV-Strahlung, Streusalz, Vogelkot und Flugrost + Schutz des Klarlacks vor ätzenden und sauren Produkten im pH Bereich 5 bis 12</td>
+                <td>SUV</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">798,32</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Fahrzeugaufbereitung</td>
+                <td>- Fahrzeug Komplettpflege - Innenreinigung - Polsterreinigung oder Lederpflege - Fensterreinigung - Kockpitpflege, Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standart - Fahrzeugwäsche u. Felgenwäsche - inkl. Mannstunden und Material</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">150,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Fahrzeuginnereinigung</td>
+                <td>Cockpitpflege (Reinigung und Pflege aller Kunststoffteile im Innenraum) Scheibenreinigung (Reinigung aller Scheiben innen) Teppichreinigung (Absaugen aller Polster sowie der Teppiche) Kofferraumreinigung (Aussaugen des Kofferraum und Pflege aller Kunststoffteile ) Türfalzen Reinigung (Reinigung aller Türfalzen und Rahmen mit Reinigungsmittel )</td>
+                <td>SUV</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">67,18</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Geruchsentfernung</td>
+                <td>Behandlung des Fahrzeuginnenraumes mit Geruchskiller</td>
+                <td>SUV</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">67,18</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Himmel-Reinigung</td>
+                <td>Reinigung Himmel-Bereich mit Reiniger</td>
+                <td>SUV</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,78</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Hundehaarentfernung</td>
+                <td>Entfernung aller Tierhaare im Fahrzeuginnenraum</td>
+                <td>SUV</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">67,18</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Lackaufbereitung</td>
+                <td>- Pflege aller Kunststoffteile im Außenbereich - Reifenpflege - Schleifpolitur - Antihologramm Politur - Scheibenreinigung</td>
+                <td>SUV</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">151,22</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Lederpflege</td>
+                <td>Reinigung und Pflege der Ledersitze und Seitenverkleidung</td>
+                <td>SUV</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">67,18</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Nano-Lack-Versiegelung</td>
+                <td>Kunststoffpflege aller Außenteile Pflege der Radkästen Reifenpflege Reinigung der Türfalzen Schleifpolieren auf allen Lackflächen soweit wie möglich Anti-Hologramm Polieren Entfettung Nano-Beschichtung Nano-Versiegelung Scheibenreinigung</td>
+                <td>SUV</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">420,16</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Nano-Scheiben-Versiegelung</td>
+                <td>Reinigung, Entfettung und Versiegelung der Windschutzscheibe im Außenbereich.</td>
+                <td>SUV</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">83,99</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Politur / Versiegelung</td>
+                <td>- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td>SUV</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">117,65</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Polsterreinigung</td>
+                <td>Reinigung  Sitzpolster inkl. Fleckenentfnung</td>
+                <td>SUV</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">67,18</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(SUV) Teppichaufbereitung</td>
+                <td>Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td>
+                <td>SUV</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">75,59</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(Transporter) Politur / Versiegelung</td>
+                <td>- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td>Ducato</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">180,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(WOMO) Ceramic Langzeitversiegelung</td>
+                <td>- Kunststoffpflege Ceramic Allround C0.01 hochwertige Keramikversiegelung  und permanent Schutz. Eigenschaften der Ceramic Allround C0.01 + Langzeitschutz der Oberfläche mit einer Standzeit von 18-24 Monaten + Glatte, hydrophobe Oberfläche mit Lotuseffekt + Glanzstabil auch nach Einsatz von sauren und alkalischen Reinigern + Easy-To-Clean-Eigenschaften, sodass Schmutz schlechter haftet und die Oberfläche schonend gereinigt werden kann + Schutz der versiegelten Oberfläche vor Umwelteinflüssen wie UV-Strahlung, Streusalz, Vogelkot und Flugrost + Schutz des Klarlacks vor ätzenden und sauren Produkten im pH Bereich 5 bis 12</td>
+                <td>Womo</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">1764,71</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(WOMO) Ceramic Versiegelung</td>
+                <td>Ceramic Allround C0.01 hochwertige Keramikversiegelung  und permanent Schutz. Eigenschaften der Ceramic Allround C0.01 + Langzeitschutz der Oberfläche mit einer Standzeit von 18-24 Monaten + Glatte, hydrophobe Oberfläche mit Lotuseffekt + Glanzstabil auch nach Einsatz von sauren und alkalischen Reinigern + Easy-To-Clean-Eigenschaften, sodass Schmutz schlechter haftet und die Oberfläche schonend gereinigt werden kann + Schutz der versiegelten Oberfläche vor Umwelteinflüssen wie UV-Strahlung, Streusalz, Vogelkot und Flugrost + Schutz des Klarlacks vor ätzenden und sauren Produkten im pH Bereich 5 bis 12</td>
+                <td>Womo</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">1764,71</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(WOMO) Fahrzeuginnenreinigung</td>
+                <td>Cockpitpflege (Reinigung und Pflege aller Kunststoffteile im Innenraum) Scheibenreinigung (Reinigung aller Scheiben innen und außen) Teppichreinigung (Absaugen aller Polster sowie der Teppiche) Türfalzen Reinigung (Reinigung aller Türfalzen und Rahmen mit Reinigungsmittel ) Reinigung aller Staufächer</td>
+                <td>Womo</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">168,03</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(WOMO) Nano-Lack-Versiegelung</td>
+                <td>Kunststoffpflege aller Außenteile Pflege der Radkästen Reifenpflege Reinigung der Türfalzen Schleifpolieren auf allen Lackflächen soweit wie möglich Anti-Hologramm Polieren Entfettung Nano-Beschichtung Nano-Versiegelung Scheibenreinigung</td>
+                <td>Womo</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">1176,47</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(WOMO) Nano-Scheiben-Versiegelung</td>
+                <td>Reinigung, Entfettung und Versiegelung der Windschutzscheibe im Außenbereich.</td>
+                <td>Womo</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">126,05</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(WOMO) Politur / Versiegelung</td>
+                <td>- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td>Womo</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">420,17</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>(WOMO) Wohnmobilwäsche</td>
+                <td>Fahrzeugwäsche inkl. Felgenreinigung  von Hand</td>
+                <td>Womo</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">210,08</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Arbeiten nach Aufwand</td>
+                <td></td>
+                <td>Sonstige</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">69,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Cabrioverdeck Versiegelung</td>
+                <td>Versiegelung des Cabrioverdeckes</td>
+                <td>Sonstige</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">32,77</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Cabrioverdeck-Reinigung</td>
+                <td>Reinigung und Wäsche des Stoffverdecks</td>
+                <td>Sonstige</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">50,42</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Dataport Tarif-Fahrzeuginnenreinigung</td>
+                <td>- Innenreinigung - Reinigung aller Türfalzen - optionale Polsterreinigung - Cockpit-Pflege - Fußmatten - Scheibenreinigung - Kunstoffpflege - Absaugen Fahrzeug-Innenraum und Polster - Fahrzeugwäsche - spezial Fliegenschmutzentfernung - Hol- und Bringservice</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">70,58</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Dellenbeseitigung</td>
+                <td>Dellenbeseitigung der ensprechenden Stellen</td>
+                <td>Sonstige</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">75,63</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Demontage Werbebeschriftung</td>
+                <td>Entfernung der Werbebeschriftung und Politur der betroffenen Fahrzeugteile (Je Bauteil)</td>
+                <td>Sonstige</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">49,58</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Energiekosten Pauschale</td>
+                <td></td>
+                <td>Sonstige</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">16,81</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Fahrzeug Desinfektion</td>
+                <td>Desinfektion gesamter Fahrzeug-Innenraum : Koch-Chemie Disinfection dient zur Desinfektion und Abtötung von krankheitserregenden Keimen, Bakterien und Viren von der Haut und von alkoholbeständigen Oberflächen. Diese Lösung basiert auf einer Rezepturempfehlung der World Health Organisation (WHO) und wird international zur Hygiene und zur Gesundheitsvorsorge empfohlen.    Artikelnummer: 434001    GTIN: 4260188688308    Kategorie: Desinfektion    Hersteller: Koch Chemie Folgende unabhängige Institute haben unsere Produkte auf unterschiedlichste Kriterien hin geprüft, zertifiziert und freigegeben: - Daimler AG - BMW AG - VW, Audi AG - Dekra AG - Institut für gewerbliche Wasserwirtschaft - Zentrum für Umweltschutz</td>
+                <td>Sonstige</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">150,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Fahrzeug-Desinfektion</td>
+                <td>Desinfektion gesamte Fahrzeug Innenraum: Koch Chemie Desinfektion dient zur Desinfektion und Abtötung von  krankheiterregenden Keimen, Bakterien und Viren von der Haut und von alkoholbeständigen Oberflächen. Die Lösung basiert auf eine Rezeptur der World Health Organisation (WHO) und wird international zur jene und zur Gesundheitsvorsorge empfohlen. Artikelnummer: 434001 GTIN: 4260188688308 Kategorie: Desinfektion Hersteller: Koch Chemie Folgende, unabhängige Institute haben unsere Produkte auf unterschiedliche Kriterien hin geprüft, zertifiziert und freigegeben. - Daimler AG - BMW AG - VW, Audi AG - Dekra AG - Institut für gewerbliche Wasserwirtschaft - Zentrum für Umweltschutz</td>
+                <td>Sonstige</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">300,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Fahrzeugwäsche Spezial</td>
+                <td>Fahrzeugwäsche Spezial  inkl. Felgenreinigung</td>
+                <td>Sonstige</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">45,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Fahrzeugwäsche Transporter</td>
+                <td>Fahrzeugwäsche Spezial  inkl. Felgenreinigung</td>
+                <td>Sonstige</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">60,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Fahrzeugwäsche normal</td>
+                <td>Fahrzeugwäsche inkl. Felgenreinigung</td>
+                <td>Sonstige</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">33,61</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Gutschein Code:</td>
+                <td></td>
+                <td>Sonstige</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">0,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Hol- und Bring-Service</td>
+                <td></td>
+                <td>Sonstige</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">25,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Klimafilter wechsel</td>
+                <td>Austausch Pollenfilter inkl. Desinfektion der Lüftungskanäle</td>
+                <td>Sonstige</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">57,98</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>LLUR Cockpitreinigung</td>
+                <td>Reinigung aller Cockpit und Kunststoffteile im Innenbereich</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">19,50</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>LLUR Fahrzeuginnenreinigung</td>
+                <td>- Aussaugen des Innenraums - Fußmatten ausklopfen - Beseitigung aller Abfälle i. fg. Behälter - Sichtkontrolle der zu reinigenden Fahrzeuge auf: Reifendruck, Motorölstand, Kühlwasser, Scheibenwaschwasser Die zu ergänzenden Füllstände benötigten Materialien werde durch die LLUR gestellt und durch die Autopflege Kiel Dokumentiert und aufgefüllt.</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">39,96</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>LLUR Fensterreinigung</td>
+                <td>Reinigung aller Fahrzeugscheiben von Innen</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">19,50</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>LLUR Polsterreinigung</td>
+                <td>Reinigung aller Sitzpolster mit Reinigungsmittel</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">18,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Mahngebühren</td>
+                <td></td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">4,20</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Montage Werbebeschriftung</td>
+                <td></td>
+                <td>Sonstige</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">39,95</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Motorwäsche</td>
+                <td>Reinigung Motor von oben per Hand so weit wie möglich mit entsprechenden Mitteln</td>
+                <td>Sonstige</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,82</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>OZON Behandlung</td>
+                <td>OZON Behndlung des gsammten innenraumdes Fahrzeug</td>
+                <td>Sonstige</td>
+                <td>Innen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">58,77</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Reinigung Linoleumboden</td>
+                <td>Vorreinigen mit dem Staubsauger , Reinigung und Pflege der Fußbodenflächen.</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">152,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Reinigung Lokomotive 4530108214/185</td>
+                <td>Reinigungsarbeiten mit Hochruckreiniger vor Ort Dietrichstrasse 9, Kiel.</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">0,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Scheinwerfer Aufbereitung</td>
+                <td>Scheinwerfer Instandsetzung Schleifarbeiten, Polieren und Beschichten</td>
+                <td>Sonstige</td>
+                <td>Außen</td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">84,03</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Tankservice Siehe Quittungskopie</td>
+                <td></td>
+                <td>Sonstige</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">0,00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Verzugszinsen</td>
+                <td>Bei Zahlungsverzug behalten wir uns vor, gemäß §288 BGB Abs. 2 Verzugszinsen in Höhe von 9 Prozentpunkten über dem Basiszinssatz zu berechnen.“ Rechnungbetrag * Verzugszinsen /100</td>
+                <td>NA</td>
+                <td></td>
+                <td>Stück</td>
+                <td>USt19</td>
+                <td class="text-right">0,00</td>
+            </tr>
+        </tbody>
     </table>
-
-    <script>
-        // Die Daten aus Ihrer Liste, als JavaScript-Array von Objekten
-        const daten = [
-            { artnr: '', dienstl: '(BUS) Fahrzeuginnereinigung', beschr: 'Cockpitpflege, Scheibenreinigung innen, Teppichreinigung, Kofferraumreinigung, Türfalzen Reinigung.', fzg: 'Bus', ort: 'Innen', vk_netto: 83.99 },
-            { artnr: '', dienstl: '(BUS) Lackaufbereitung', beschr: 'Pflege Kunststoffteile außen, Reifenpflege, Schleifpolitur, Antihologramm Politur, Scheibenreinigung.', fzg: 'Bus', ort: 'Außen', vk_netto: 168.03 },
-            { artnr: '', dienstl: '(Bus) Fahrzeugaufbereitung', beschr: 'Komplettpflege, Innenreinigung, Polster/Lederpflege, Lackpflege/Versiegelung, Kratzerentf.', fzg: 'NA', ort: '', vk_netto: 250.00 },
-            { artnr: '', dienstl: '(Bus) Geruchsentfernung', beschr: 'Behandlung des Fahrzeuginnenraumes mit Geruchskiller.', fzg: 'Bus', ort: 'Innen', vk_netto: 83.99 },
-            { artnr: '', dienstl: '(Kombi) Lackaufbereitung', beschr: 'Pflege Kunststoffteile außen, Reifenpflege, Schleifpolitur, Antihologramm Politur, Scheibenreinigung.', fzg: 'Kombi', ort: 'Außen', vk_netto: 142.82 },
-            { artnr: '100', dienstl: '(PKW) Fahrzeugaufbereitung', beschr: 'Komplettpflege, Innenreinigung, Polster/Lederpflege, Lackpflege/Versiegelung, Kratzerentf. Standard.', fzg: 'NA', ort: '', vk_netto: 140.00 },
-            { artnr: '', dienstl: '(PKW) Ceramic Versiegelung', beschr: 'Hochwertige Keramikversiegelung (18-24 Monate Standzeit), Hydrophobie, Schutz vor Umwelteinflüssen.', fzg: 'PKW', ort: 'Außen', vk_netto: 462.18 },
-            // Fügen Sie hier alle weiteren Datenobjekte ein.
-            // ...
-        ];
-
-        // Funktion zum Befüllen der Tabelle
-        function tabelleBefuellen() {
-            const tbody = document.querySelector('#dienstleistungsTabelle tbody');
-            
-            // Schleife über das Daten-Array
-            daten.forEach(item => {
-                const tr = document.createElement('tr'); // Neue Zeile erstellen
-                
-                // Erstellen der Zellen und Einfügen der Daten
-                tr.innerHTML = `
-                    <td>${item.artnr}</td>
-                    <td>${item.dienstl}</td>
-                    <td>${item.beschr}</td>
-                    <td>${item.fzg}</td>
-                    <td>${item.ort}</td>
-                    <td>${item.vk_netto.toFixed(2).replace('.', ',')} €</td>
-                `;
-                
-                tbody.appendChild(tr); // Zeile zur Tabelle hinzufügen
-            });
-        }
-
-        // Tabelle befüllen, sobald das DOM geladen ist
-        document.addEventListener('DOMContentLoaded', tabelleBefuellen);
-    </script>
-
-</body>
+    </body>
 </html>
