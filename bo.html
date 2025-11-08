@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DetailinSoft Dynamisch & Supabase Auth</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* ... (DEINE VORHERIGEN CSS-REGELN bleiben unverändert) ... */
+        /* HIER BEGINNEN DIE NEUEN CSS-REGELN FÜR DAS MODAL */
+        
+        /* Modal Hintergrund */
+        .modal {
+            display: none; /* Standardmäßig versteckt */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4); /* Leichter Schwarz-Overlay */
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Modal Inhalt */
+        .modal-content {
+            background-color: #fefefe;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 400px;
+            text-align: left;
+        }
+
+        .modal-content h3 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .modal-content button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+
+        .modal-content button:hover {
+            background-color: #1e7e34;
+        }
+
+        /* Schließen-Button */
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+        }
+
+        /* (Die fluid-typography CSS-Regeln aus der letzten Antwort sollten hier weiterhin stehen) */
+        
+        /* DYNAMISCHE SCHRIFTGRÖßEN MIT CLAMP UND VW */
+        /* ... */
+        .header-content h1 { font-size: clamp(40px, 8vw, 100px); /* ... */ }
+        .header-content p { font-size: clamp(24px, 3vw, 48px); /* ... */ }
+        /* ... */
+        
+    </style>
+</head>
+<body>
+
+    <div class="header-content">
+        <h1><span class="blue-part">Detailing -</span> <span class="red-part">Soft</span></h1>
+        <p>Willkommen</p>
+    </div>
+
+    <div class="footer-buttons">
+        <a href="#" class="button" onclick="openLoginModal()">Boss</a>
+        <a href="#" class="button">Angebot</a>
+    </div>
+
+    <div id="loginModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeLoginModal()">&times;</span>
+            <h3>Boss-Login</h3>
+            <form id="loginForm">
+                <label for="username">Benutzername / E-Mail</label>
+                <input type="email" id="username" name="username" required>
+                
+                <label for="password">Passwort</label>
+                <input type="password" id="password" name="password" required>
+                
+                <button type="submit" id="loginButton">Login</button>
+            </form>
+            <p id="auth-status" style="color: red; text-align: center; margin-top: 15px;"></p>
+        </div>
+    </div>
+
+    <script>
+        // *** 1. INITIALISIERUNG VON SUPABASE ***
+        const SUPABASE_URL = 'DEINE_SUPABASE_URL_HIER'; // <-- Wichtig: Ersetzen!
+        const SUPABASE_ANON_KEY = 'DEIN_ANON_KEY_HIER'; // <-- Wichtig: Ersetzen!
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // Die Zielseite, zu der nach erfolgreichem Login weitergeleitet wird
+        const BOSS_DASHBOARD_URL = '/boss-dashboard.html';
+
+        // *** 2. MODAL FUNKTIONALITÄTEN ***
+        const loginModal = document.getElementById('loginModal');
+        const loginForm = document.getElementById('loginForm');
+        const statusMessage = document.getElementById('auth-status');
+
+        function openLoginModal() {
+            loginModal.style.display = 'flex';
+        }
+
+        function closeLoginModal() {
+            loginModal.style.display = 'none';
+        }
+
+        // Schließen des Modals bei Klick außerhalb
+        window.onclick = function(event) {
+            if (event.target === loginModal) {
+                closeLoginModal();
+            }
+        }
+        
+        // *** 3. LOGIN-LOGIK MIT SUPABASE ***
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            statusMessage.textContent = 'Wird angemeldet...';
+            
+            const email = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Supabase Login-Aufruf
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                console.error("Login Fehler:", error);
+                statusMessage.textContent = 'Fehler beim Login: ' + error.message;
+                return;
+            }
+            
+            // Optional: Prüfen, ob der Benutzer Admin-Rechte hat (Siehe unten)
+            // const user = data.user;
+            // if (user.user_metadata.is_admin) { ... }
+
+            // Weiterleitung nach erfolgreichem Login
+            statusMessage.textContent = 'Login erfolgreich! Weiterleitung...';
+            window.location.href = BOSS_DASHBOARD_URL;
+        });
+
+        // *** 4. ANFORDERUNG: ADMIN-PRÜFUNG & BENUTZERVERWALTUNG ***
+
+        /*
+         * Supabase bietet keine native 'Admin'-Rolle. Du musst dies über eine
+         * zusätzliche Datenbanktabelle (z.B. 'profiles') oder über die 
+         * 'user_metadata' beim Anlegen des Benutzers lösen.
+         * * BEISPIEL FÜR ADMIN-PRÜFUNG (MUSS IM PROFIL GESPEICHERT SEIN):
+         * * function checkAdminStatus(user) {
+         * return user.user_metadata.is_admin === true;
+         * }
+         * * BENUTZERVERWALTUNG & PASSWORT ÄNDERN:
+         * * 1. Passwort ändern (eingeloggter Benutzer):
+         * const { data, error } = await supabase.auth.updateUser({ password: 'neues_passwort' });
+         * * 2. Ersten Benutzer (Admin) einmalig anlegen:
+         * Dies sollte idealerweise über das Supabase Dashboard oder eine Registrierungsseite erfolgen.
+         * * 3. Andere Benutzer verwalten:
+         * Dies erfordert ein separates Admin-Interface (Boss-Dashboard),
+         * das Supabase-Funktionen nutzt, um Benutzer über RLS (Row Level Security)
+         * sicher in der `auth.users` Tabelle oder einer verknüpften Tabelle zu ändern.
+         */
+
+    </script>
+</body>
+</html>
