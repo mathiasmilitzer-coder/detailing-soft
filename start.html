@@ -13,7 +13,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            /* ÄNDERUNG: Startet die Elemente oben */
+            justify-content: flex-start; 
             min-height: 100vh;
             margin: 0;
             padding: 20px;
@@ -22,7 +23,9 @@
 
         /* HEADER ANPASSUNGEN */
         .header-content {
-            margin-bottom: auto;
+            /* ÄNDERUNG: margin-bottom: auto entfernen, um Header oben zu fixieren */
+            margin-bottom: 20px; 
+            margin-top: 0;
         }
 
         /* Farbanpassung für Detailing - Soft */
@@ -52,10 +55,11 @@
         .footer-buttons {
             display: flex;
             gap: 20px;
-            margin-top: auto;
+            /* ÄNDERUNG: Setzt den vertikalen Abstand über und unter den Buttons auf Maximum */
+            margin: auto 0; 
             justify-content: center;
-            /* HIER WIRD DER ABSTAND ZUM UNTEREN RAND ANGEPASST */
-            padding-bottom: 50px; 
+            /* padding-bottom entfernt, da es durch margin: auto ersetzt wird */
+            padding-bottom: 0; 
         }
 
         .button {
@@ -71,7 +75,8 @@
             transition: background-color 0.3s, transform 0.1s;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
+        
+        /* [...] Weitere Stile bleiben unverändert */
         .button:hover {
             background-color: #0056b3;
             transform: translateY(-2px);
@@ -82,7 +87,8 @@
             .footer-buttons {
                 flex-direction: column;
                 gap: 15px;
-                padding-bottom: 30px; /* Etwas weniger Abstand auf kleinen Bildschirmen */
+                /* Entfernt padding-bottom */
+                padding-bottom: 0; 
                 width: 80%;
             }
 
