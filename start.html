@@ -3,64 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DetailinSoft Beispiel</title>
+    <title>DetailinSoft Responsive</title>
     <style>
+        /* BASE STYLES FÜR ALLE GERÄTE */
         body {
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between; /* Verteilt den Inhalt */
-            min-height: 100vh; /* Mindesthöhe des Viewports */
+            justify-content: space-between;
+            min-height: 100vh;
             margin: 0;
-            padding: 20px; /* Etwas Abstand vom Rand */
+            padding: 20px;
+            text-align: center; /* Zentriert alles, was nicht durch Flexbox zentriert wird */
         }
 
+        /* HEADER ANPASSUNGEN */
         .header-content {
-            text-align: center;
-            margin-bottom: auto; /* Schiebt es nach oben */
+            margin-bottom: auto;
         }
 
+        /* Farbanpassung für Detailing - Soft */
+        .blue-part {
+            color: #007bff; /* Ein helles Blau */
+        }
+        .red-part {
+            color: #dc3545; /* Ein helles Rot */
+        }
+
+        /* Detailing - Soft (h1) Größe für große Bildschirme */
         .header-content h1 {
-            font-size: 8em; /* Große Schrift */
+            font-size: 8em;
             margin-bottom: 0.1em;
+            line-height: 1.1;
         }
 
+        /* Willkommen (p) Größe: Verdoppelt (3em statt 1.5em) */
         .header-content p {
-            font-size: 1.5em; /* Mittlere Schrift für Willkommen */
+            font-size: 3em; /* Doppelt so groß wie zuvor */
             margin-top: 0;
         }
 
+        /* FOOTER & BUTTON ANPASSUNGEN */
         .footer-buttons {
             display: flex;
-            gap: 20px; /* Abstand zwischen den Buttons */
-            margin-top: auto; /* Schiebt es nach unten */
-            width: 100%; /* Volle Breite, um Justify-Content zu nutzen, falls nötig */
-            justify-content: center; /* Buttons in der Mitte zentrieren */
-            padding-bottom: 40px; /* Abstand vom unteren Rand */
+            gap: 20px;
+            margin-top: auto;
+            justify-content: center;
+            padding-bottom: 40px;
         }
 
         .button {
-            padding: 10px 20px;
-            font-size: 1.2em;
-            text-decoration: none; /* Entfernt die Unterstreichung bei Links */
+            padding: 12px 25px; /* Etwas größere Buttons */
+            font-size: 1.3em;
+            text-decoration: none;
             color: white;
-            background-color: #007bff; /* Beispiel-Farbe */
+            background-color: #007bff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .button:hover {
             background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* DYNAMISCHE ANPASSUNG FÜR HANDY-ANSICHT (Responsive Design) */
+        @media (max-width: 600px) {
+            
+            /* Titelschrift deutlich verkleinern, damit sie auf den Bildschirm passt */
+            .header-content h1 {
+                font-size: 4em;
+            }
+
+            /* Willkommen-Schrift für Handyansicht anpassen */
+            .header-content p {
+                font-size: 1.8em;
+            }
+
+            /* Buttons untereinander anordnen */
+            .footer-buttons {
+                flex-direction: column;
+                gap: 15px;
+                padding-bottom: 20px;
+                width: 80%; /* Buttons nehmen mehr Breite ein */
+            }
+
+            .button {
+                width: 100%; /* Buttons auf volle Breite setzen */
+                font-size: 1.2em;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="header-content">
-        <h1>Detailing - Soft</h1>
+        <h1><span class="blue-part">Detailing -</span> <span class="red-part">Soft</span></h1>
         <p>Willkommen</p>
     </div>
 
