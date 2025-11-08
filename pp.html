@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editierbare und Filterbare Dienstleistungen</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f7f6; }
+        h1 { color: #2c3e50; }
+        
+        /* --- Steuerelemente Stil --- */
+        .controls { 
+            display: flex; 
+            gap: 20px; 
+            margin-bottom: 20px; 
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .controls label { font-weight: bold; color: #34495e; }
+        .controls select, .controls button {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #bdc3c7;
+            cursor: pointer;
+        }
+
+        /* --- Tabellen Stil --- */
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+        th, td { 
+            border: 1px solid #ddd; 
+            padding: 8px; 
+            text-align: left;
+            vertical-align: top;
+        }
+        th { 
+            background-color: #3498db; /* Hellblau für Kopfzeile */
+            color: white;
+            font-weight: bold;
+            position: sticky; 
+            top: 0;
+            z-index: 10;
+        }
+        tr:nth-child(even) { 
+            background-color: #f8f8f8; 
+        }
+        
+        /* --- Editierbarer Stil --- */
+        [contenteditable="true"]:focus {
+            outline: 2px solid #e74c3c; /* Roter Rand beim Bearbeiten */
+            background-color: #ffeaea; /* Helle rote Hervorhebung */
+        }
+        
+        /* Formatierung für Preisspalten und Nummern */
+        .text-right { 
+            text-align: right; 
+            white-space: nowrap; 
+            font-weight: bold;
+        }
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Übersicht Fahrzeugdienstleistungen (Filterbar & Editierbar)</h1>
+    
+    <div class="controls">
+        <label for="filterFahrzeugart">Fahrzeugart filtern:</label>
+        <select id="filterFahrzeugart" onchange="filterTable()">
+            <option value="">Alle Fahrzeugarten</option>
+            </select>
+
+        <label for="filterOrt">Ort filtern:</label>
+        <select id="filterOrt" onchange="filterTable()">
+            <option value="">Alle Orte</option>
+            </select>
+        
+        <span style="margin-left: auto; color: #e74c3c;">
+            ℹ️ **Klicken Sie in eine Zelle** (außer Preise/Steuer) zum Bearbeiten!
+        </span>
+    </div>
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th class="text-center">Artikelnummer</th>
+                <th>Dienstleistung</th>
+                <th>Beschreibung</th>
+                <th>Fahrzeugart</th>
+                <th>Ort</th>
+                <th>Einheit</th>
+                <th>Steuerart</th>
+                <th class="text-right">VK (Netto)</th>
+                <th class="text-right">VK (Brutto)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-fahrzeugart="Bus" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(BUS) Fahrzeuginnereinigung</td>
+                <td contenteditable="true">Cockpitpflege (...) Scheibenreinigung (...) Teppichreinigung (...) Kofferraumreinigung (...) Türfalzen Reinigung (...)</td>
+                <td contenteditable="true">Bus</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">83,99</td>
+                <td class="text-right brutto-price">99,95</td>
+            </tr>
+            <tr data-fahrzeugart="Bus" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(BUS) Lackaufbereitung</td>
+                <td contenteditable="true">- Pflege aller Kunststoffteile (...) - Reifenpflege - Schleifpolitur - Antihologramm Politur - Scheibenreinigung</td>
+                <td contenteditable="true">Bus</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">168,03</td>
+                <td class="text-right brutto-price">199,95</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Bus) Fahrzeugaufbereitung</td>
+                <td contenteditable="true">- Fahrzeug Komplettpflege - Innenreinigung - Polsterreinigung (...) - Fensterreinigung - Kockpitpflege (...) - inkl. Mannstunden und Material</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">250,00</td>
+                <td class="text-right brutto-price">297,50</td>
+            </tr>
+            <tr data-fahrzeugart="Bus" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Bus) Geruchsentfernung</td>
+                <td contenteditable="true">Behandlung des Fahrzeuginnenraumes mit Geruchskiller</td>
+                <td contenteditable="true">Bus</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">83,99</td>
+                <td class="text-right brutto-price">99,95</td>
+            </tr>
+            <tr data-fahrzeugart="Bus" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Bus) Himmel-Reinigung</td>
+                <td contenteditable="true">Reinigung Himmel-Bereich mit Reiniger</td>
+                <td contenteditable="true">Bus</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="Bus" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Bus) Hundehaarentfernung</td>
+                <td contenteditable="true">Entfernung aller Tierhaare im Fahrzeuginnenraum</td>
+                <td contenteditable="true">Bus</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">83,99</td>
+                <td class="text-right brutto-price">99,95</td>
+            </tr>
+            <tr data-fahrzeugart="Bus" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Bus) Lederpflege</td>
+                <td contenteditable="true">Reinigung und Pflege der Ledersitze und Seitenverkleidung</td>
+                <td contenteditable="true">Bus</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">67,18</td>
+                <td class="text-right brutto-price">80,04</td>
+            </tr>
+            <tr data-fahrzeugart="Bus" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Bus) Nano-Lack-Versiegelung</td>
+                <td contenteditable="true">Kunststoffpflege aller Außenteile (...) Anti-Hologramm Polieren Entfettung Nano-Beschichtung Nano-Versiegelung Scheibenreinigung</td>
+                <td contenteditable="true">Bus</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">545,38</td>
+                <td class="text-right brutto-price">649,00</td>
+            </tr>
+            <tr data-fahrzeugart="Bus" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Bus) Nano-Scheiben-Versiegelung</td>
+                <td contenteditable="true">Reinigung, Entfettung und Versiegelung der Windschutzscheibe im Außenbereich.</td>
+                <td contenteditable="true">Bus</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">100,84</td>
+                <td class="text-right brutto-price">120,00</td>
+            </tr>
+            <tr data-fahrzeugart="Bus" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Bus) Politur / Versiegelung</td>
+                <td contenteditable="true">- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td contenteditable="true">Bus</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">117,65</td>
+                <td class="text-right brutto-price">140,00</td>
+            </tr>
+            <tr data-fahrzeugart="Bus" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Bus) Polsterreinigung</td>
+                <td contenteditable="true">Reinigung aller Sitzpolster inkl. Fleckenentfnung</td>
+                <td contenteditable="true">Bus</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">83,99</td>
+                <td class="text-right brutto-price">99,95</td>
+            </tr>
+            <tr data-fahrzeugart="Bus" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Bus) Teppichaufbereitung</td>
+                <td contenteditable="true">Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td>
+                <td contenteditable="true">Bus</td>
+                <td contenteditable="true">Innen</td>
+                <td contentetable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">75,50</td>
+                <td class="text-right brutto-price">89,85</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Doblo-Klasse) Auslieferung GW/NW</td>
+                <td contenteditable="true">Reinigung Außenbereich (...) Reinigung der Türfalzen Innenbereich (...) Demontage Reklame inkl. Tankservice</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">125,00</td>
+                <td class="text-right brutto-price">148,75</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Doblo-Klasse) Fahrzeugaufbereitung</td>
+                <td contenteditable="true">- Fahrzeug Komplettpflege (...) - Demontage Reklame - Kratzerentfernung Standart - inkl. Mannstunden und Material</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">230,00</td>
+                <td class="text-right brutto-price">273,70</td>
+            </tr>
+            <tr data-fahrzeugart="Ducato" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Ducato) Lackaufbereitung</td>
+                <td contenteditable="true">- Pflege aller Kunststoffteile im Außenbereich - Reifenpflege - Schleifpolitur - Antihologramm Politur - Scheibenreinigung</td>
+                <td contenteditable="true">Ducato</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">377,31</td>
+                <td class="text-right brutto-price">449,00</td>
+            </tr>
+            <tr data-fahrzeugart="Ducato" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Ducato) Politur / Versiegelung</td>
+                <td contenteditable="true">- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td contenteditable="true">Ducato</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">210,08</td>
+                <td class="text-right brutto-price">250,00</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Ducato-Klasse) Auslieferung GW/NW</td>
+                <td contenteditable="true">Reinigung Außenbereich (...) Reinigung der Türfalzen Innenbereich (...) Demontage Reklame inkl. Tankservice</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">165,00</td>
+                <td class="text-right brutto-price">196,35</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Ducato-Klasse) Fahrzeugaufbereitung</td>
+                <td contenteditable="true">- Fahrzeug Komplettpflege (...) - Demontage Reklame - Kratzerentfernung Standart - inkl. Mannstunden und Material</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">270,00</td>
+                <td class="text-right brutto-price">321,30</td>
+            </tr>
+            <tr data-fahrzeugart="Kombi" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Kombi) Ceramic Versiegelung</td>
+                <td contenteditable="true">Ceramic Allround C0.01 hochwertige Keramikversiegelung und permanent Schutz. Eigenschaften der Ceramic Allround C0.01 + Langzeitschutz (...) + Easy-To-Clean-Eigenschaften (...)</td>
+                <td contenteditable="true">Kombi</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">546,22</td>
+                <td class="text-right brutto-price">650,00</td>
+            </tr>
+            <tr data-fahrzeugart="Kombi" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Kombi) Fahrzeuginnereinigung</td>
+                <td contenteditable="true">Cockpitpflege (...) Scheibenreinigung (...) Teppichreinigung (...) Kofferraumreinigung (...) Türfalzen Reinigung (...)</td>
+                <td contenteditable="true">Kombi</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="Kombi" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Kombi) Geruchsentfernung</td>
+                <td contenteditable="true">Behandlung des Fahrzeuginnenraumes mit Geruchskiller</td>
+                <td contenteditable="true">Kombi</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">67,18</td>
+                <td class="text-right brutto-price">80,04</td>
+            </tr>
+            <tr data-fahrzeugart="Kombi" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Kombi) Himmel-Reinigung</td>
+                <td contenteditable="true">Reinigung Himmel-Bereich mit Reiniger</td>
+                <td contenteditable="true">Kombi</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="Kombi" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Kombi) Hundehaarentfernung</td>
+                <td contenteditable="true">Entfernung aller Tierhaare im Fahrzeuginnenraum</td>
+                <td contenteditable="true">Kombi</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="Kombi" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Kombi) Lackaufbereitung</td>
+                <td contenteditable="true">- Pflege aller Kunststoffteile im Außenbereich - Reifenpflege - Schleifpolitur - Antihologramm Politur - Scheibenreinigung</td>
+                <td contenteditable="true">Kombi</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">142,82</td>
+                <td class="text-right brutto-price">170,00</td>
+            </tr>
+            <tr data-fahrzeugart="Kombi" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Kombi) Lederpflege</td>
+                <td contenteditable="true">Reinigung und Pflege der Ledersitze und Seitenverkleidung</td>
+                <td contenteditable="true">Kombi</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="Kombi" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Kombi) Nano-Lack-Versiegelung</td>
+                <td contenteditable="true">Kunststoffpflege aller Außenteile (...) Nano-Beschichtung Nano-Versiegelung Scheibenreinigung</td>
+                <td contenteditable="true">Kombi</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">293,82</td>
+                <td class="text-right brutto-price">349,75</td>
+            </tr>
+            <tr data-fahrzeugart="Kombi" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Kombi) Nano-Scheiben-Versiegelung</td>
+                <td contenteditable="true">Reinigung, Entfettung und Versiegelung der Windschutzscheibe im Außenbereich.</td>
+                <td contenteditable="true">Kombi</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">83,99</td>
+                <td class="text-right brutto-price">99,95</td>
+            </tr>
+            <tr data-fahrzeugart="Kombi" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Kombi) Politur / Versiegelung</td>
+                <td contenteditable="true">- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td contenteditable="true">Kombi</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">67,18</td>
+                <td class="text-right brutto-price">80,04</td>
+            </tr>
+            <tr data-fahrzeugart="Kombi" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Kombi) Polsterreinigung</td>
+                <td contenteditable="true">Reinigung aller Sitzpolster inkl. Fleckenentfnung</td>
+                <td contenteditable="true">Kombi</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="Kombi" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Kombi) Teppichaufbereitung</td>
+                <td contenteditable="true">Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td>
+                <td contenteditable="true">Kombi</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">75,58</td>
+                <td class="text-right brutto-price">90,00</td>
+            </tr>
+            <tr data-fahrzeugart="Limo" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Limo) Ceramic Versiegelung</td>
+                <td contenteditable="true">Ceramic Allround C0.01 hochwertige Keramikversiegelung und permanent Schutz. Eigenschaften der Ceramic Allround C0.01 + Langzeitschutz (...) + Easy-To-Clean-Eigenschaften (...)</td>
+                <td contenteditable="true">Limo</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">630,25</td>
+                <td class="text-right brutto-price">750,00</td>
+            </tr>
+            <tr data-fahrzeugart="Limo" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Limo) Fahrzeuginnereinigung</td>
+                <td contenteditable="true">Cockpitpflege (...) Scheibenreinigung (...) Teppichreinigung (...) Kofferraumreinigung (...) Türfalzen Reinigung (...)</td>
+                <td contenteditable="true">Limo</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="Limo" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Limo) Geruchsentfernung</td>
+                <td contenteditable="true">Behandlung des Fahrzeuginnenraumes mit Geruchskiller</td>
+                <td contenteditable="true">Limo</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">67,18</td>
+                <td class="text-right brutto-price">80,04</td>
+            </tr>
+            <tr data-fahrzeugart="Limo" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Limo) Himmel-Reinigung</td>
+                <td contenteditable="true">Reinigung Himmel-Bereich mit Reiniger</td>
+                <td contenteditable="true">Limo</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="Limo" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Limo) Hundehaarentfernung</td>
+                <td contenteditable="true">Entfernung aller Tierhaare im Fahrzeuginnenraum</td>
+                <td contenteditable="true">Limo</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="Limo" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Limo) Lackaufbereitung</td>
+                <td contenteditable="true">- Pflege aller Kunststoffteile im Außenbereich - Reifenpflege - Schleifpolitur - Antihologramm Politur - Scheibenreinigung</td>
+                <td contenteditable="true">Limo</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">142,82</td>
+                <td class="text-right brutto-price">170,00</td>
+            </tr>
+            <tr data-fahrzeugart="Limo" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Limo) Lederpflege</td>
+                <td contenteditable="true">Reinigung und Pflege der Ledersitze und Seitenverkleidung</td>
+                <td contenteditable="true">Limo</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="Limo" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Limo) Nano-Lack-Versiegelung</td>
+                <td contenteditable="true">Kunststoffpflege aller Außenteile (...) Nano-Beschichtung Nano-Versiegelung Scheibenreinigung</td>
+                <td contenteditable="true">Limo</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">293,28</td>
+                <td class="text-right brutto-price">348,00</td>
+            </tr>
+            <tr data-fahrzeugart="Limo" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Limo) Nano-Scheiben-Versiegelung</td>
+                <td contenteditable="true">Reinigung, Entfettung und Versiegelung der Windschutzscheibe im Außenbereich.</td>
+                <td contenteditable="true">Limo</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">83,99</td>
+                <td class="text-right brutto-price">99,95</td>
+            </tr>
+            <tr data-fahrzeugart="Limo" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Limo) Politur / Versiegelung</td>
+                <td contenteditable="true">- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td contenteditable="true">Limo</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">67,18</td>
+                <td class="text-right brutto-price">80,04</td>
+            </tr>
+            <tr data-fahrzeugart="Limo" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Limo) Polsterreinigung</td>
+                <td contenteditable="true">Reinigung aller Sitzpolster inkl. Fleckenentfnung</td>
+                <td contenteditable="true">Limo</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="Limo" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Limo) Teppichaufbereitung</td>
+                <td contenteditable="true">Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td>
+                <td contenteditable="true">Limo</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">75,50</td>
+                <td class="text-right brutto-price">89,85</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(MAN) Bus-Innenreinigung</td>
+                <td contenteditable="true">Cockpitpflege (...) Scheibenreinigung (...) Teppichreinigung (...) Kofferraumreinigung (...) Türfalzen Reinigung (...)</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">235,00</td>
+                <td class="text-right brutto-price">279,65</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(PKW) Auslieferung GW/NW</td>
+                <td contenteditable="true">Reinigung Außenbereich (...) Reinigung der Türfalzen Innenbereich (...) Demontage Reklame inkl. Tankservice</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">70,00</td>
+                <td class="text-right brutto-price">83,30</td>
+            </tr>
+            <tr data-fahrzeugart="PKW" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(PKW) Ceramic Versiegelung</td>
+                <td contenteditable="true">Ceramic Allround C0.01 hochwertige Keramikversiegelung und permanent Schutz. Eigenschaften der Ceramic Allround C0.01 + Langzeitschutz (...) + Easy-To-Clean-Eigenschaften (...)</td>
+                <td contenteditable="true">PKW</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">462,18</td>
+                <td class="text-right brutto-price">550,00</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true">100</td>
+                <td contenteditable="true">(PKW) Fahrzeugaufbereitung</td>
+                <td contenteditable="true">- Fahrzeug Komplettpflege (...) - Demontage Reklame - Kratzerentfernung Standart - inkl. Mannstunden und Material</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">140,00</td>
+                <td class="text-right brutto-price">166,60</td>
+            </tr>
+            <tr data-fahrzeugart="PKW" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(PKW) Fahrzeuginnereinigung</td>
+                <td contenteditable="true">Cockpitpflege (...) Scheibenreinigung (...) Teppichreinigung (...) Kofferraumreinigung (...) Türfalzen Reinigung (...)</td>
+                <td contenteditable="true">PKW</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="PKW" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(PKW) Geruchsentfernung</td>
+                <td contenteditable="true">Behandlung des Fahrzeuginnenraumes mit Geruchskiller</td>
+                <td contenteditable="true">PKW</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">50,37</td>
+                <td class="text-right brutto-price">59,94</td>
+            </tr>
+            <tr data-fahrzeugart="PKW" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(PKW) Himmel-Reinigung</td>
+                <td contenteditable="true">Reinigung Himmel-Bereich mit Reiniger</td>
+                <td contenteditable="true">PKW</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="PKW" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(PKW) Hundehaarentfernung</td>
+                <td contenteditable="true">Entfernung aller Tierhaare im Fahrzeuginnenraum</td>
+                <td contenteditable="true">PKW</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="PKW" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(PKW) Lackaufbereitung</td>
+                <td contenteditable="true">- Pflege aller Kunststoffteile im Außenbereich - Reifenpflege - Schleifpolitur - Antihologramm Politur - Scheibenreinigung</td>
+                <td contenteditable="true">PKW</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">126,05</td>
+                <td class="text-right brutto-price">150,00</td>
+            </tr>
+            <tr data-fahrzeugart="PKW" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(PKW) Lederpflege</td>
+                <td contenteditable="true">Reinigung und Pflege der Ledersitze und Seitenverkleidung</td>
+                <td contenteditable="true">PKW</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,77</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="PKW" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(PKW) Nano-Lack-Versiegelung</td>
+                <td contenteditable="true">Kunststoffpflege aller Außenteile (...) Nano-Beschichtung Nano-Versiegelung Scheibenreinigung</td>
+                <td contenteditable="true">PKW</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">251,26</td>
+                <td class="text-right brutto-price">299,00</td>
+            </tr>
+            <tr data-fahrzeugart="PKW" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(PKW) Nano-Scheiben-Versiegelung</td>
+                <td contenteditable="true">Reinigung, Entfettung und Versiegelung der Windschutzscheibe im Außenbereich.</td>
+                <td contenteditable="true">PKW</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">83,99</td>
+                <td class="text-right brutto-price">99,95</td>
+            </tr>
+            <tr data-fahrzeugart="PKW" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(PKW) Politur / Versiegelung</td>
+                <td contenteditable="true">- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td contenteditable="true">PKW</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="PKW" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(PKW) Polsterreinigung</td>
+                <td contenteditable="true">Reinigung aller Sitzpolster inkl. Fleckenentfnung</td>
+                <td contenteditable="true">PKW</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,77</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="PKW" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(PKW) Teppichaufbereitung</td>
+                <td contenteditable="true">Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td>
+                <td contenteditable="true">PKW</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">50,38</td>
+                <td class="text-right brutto-price">60,00</td>
+            </tr>
+            <tr data-fahrzeugart="Bus" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SBus) Ceramic Versiegelung</td>
+                <td contenteditable="true">Ceramic Allround C0.01 hochwertige Keramikversiegelung und permanent Schutz. Eigenschaften der Ceramic Allround C0.01 + Langzeitschutz (...) + Easy-To-Clean-Eigenschaften (...)</td>
+                <td contenteditable="true">Bus</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">1638,66</td>
+                <td class="text-right brutto-price">1950,00</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Auslieferung GW/NW</td>
+                <td contenteditable="true">Reinigung Außenbereich (...) Reinigung der Türfalzen Innenbereich (...) Demontage Reklame inkl. Tankservice</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">75,00</td>
+                <td class="text-right brutto-price">89,25</td>
+            </tr>
+            <tr data-fahrzeugart="SUV" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Ceramic Versiegelung</td>
+                <td contenteditable="true">Ceramic Allround C0.01 hochwertige Keramikversiegelung und permanent Schutz. Eigenschaften der Ceramic Allround C0.01 + Langzeitschutz (...) + Easy-To-Clean-Eigenschaften (...)</td>
+                <td contenteditable="true">SUV</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">798,32</td>
+                <td class="text-right brutto-price">950,00</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Fahrzeugaufbereitung</td>
+                <td contenteditable="true">- Fahrzeug Komplettpflege (...) - Kratzerentfernung Standart - inkl. Mannstunden und Material</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">150,00</td>
+                <td class="text-right brutto-price">178,50</td>
+            </tr>
+            <tr data-fahrzeugart="SUV" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Fahrzeuginnereinigung</td>
+                <td contenteditable="true">Cockpitpflege (...) Scheibenreinigung (...) Teppichreinigung (...) Kofferraumreinigung (...) Türfalzen Reinigung (...)</td>
+                <td contenteditable="true">SUV</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">67,18</td>
+                <td class="text-right brutto-price">80,04</td>
+            </tr>
+            <tr data-fahrzeugart="SUV" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Geruchsentfernung</td>
+                <td contenteditable="true">Behandlung des Fahrzeuginnenraumes mit Geruchskiller</td>
+                <td contenteditable="true">SUV</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">67,18</td>
+                <td class="text-right brutto-price">80,04</td>
+            </tr>
+            <tr data-fahrzeugart="SUV" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Himmel-Reinigung</td>
+                <td contenteditable="true">Reinigung Himmel-Bereich mit Reiniger</td>
+                <td contenteditable="true">SUV</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,78</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="SUV" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Hundehaarentfernung</td>
+                <td contenteditable="true">Entfernung aller Tierhaare im Fahrzeuginnenraum</td>
+                <td contenteditable="true">SUV</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">67,18</td>
+                <td class="text-right brutto-price">80,04</td>
+            </tr>
+            <tr data-fahrzeugart="SUV" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Lackaufbereitung</td>
+                <td contenteditable="true">- Pflege aller Kunststoffteile im Außenbereich - Reifenpflege - Schleifpolitur - Antihologramm Politur - Scheibenreinigung</td>
+                <td contenteditable="true">SUV</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">151,22</td>
+                <td class="text-right brutto-price">180,00</td>
+            </tr>
+            <tr data-fahrzeugart="SUV" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Lederpflege</td>
+                <td contenteditable="true">Reinigung und Pflege der Ledersitze und Seitenverkleidung</td>
+                <td contenteditable="true">SUV</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">67,18</td>
+                <td class="text-right brutto-price">80,04</td>
+            </tr>
+            <tr data-fahrzeugart="SUV" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Nano-Lack-Versiegelung</td>
+                <td contenteditable="true">Kunststoffpflege aller Außenteile (...) Nano-Beschichtung Nano-Versiegelung Scheibenreinigung</td>
+                <td contenteditable="true">SUV</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">420,16</td>
+                <td class="text-right brutto-price">500,00</td>
+            </tr>
+            <tr data-fahrzeugart="SUV" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Nano-Scheiben-Versiegelung</td>
+                <td contenteditable="true">Reinigung, Entfettung und Versiegelung der Windschutzscheibe im Außenbereich.</td>
+                <td contenteditable="true">SUV</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">83,99</td>
+                <td class="text-right brutto-price">99,95</td>
+            </tr>
+            <tr data-fahrzeugart="SUV" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Politur / Versiegelung</td>
+                <td contenteditable="true">- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td contenteditable="true">SUV</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">117,65</td>
+                <td class="text-right brutto-price">140,00</td>
+            </tr>
+            <tr data-fahrzeugart="SUV" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Polsterreinigung</td>
+                <td contenteditable="true">Reinigung Sitzpolster inkl. Fleckenentfnung</td>
+                <td contenteditable="true">SUV</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">67,18</td>
+                <td class="text-right brutto-price">80,04</td>
+            </tr>
+            <tr data-fahrzeugart="SUV" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(SUV) Teppichaufbereitung</td>
+                <td contenteditable="true">Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td>
+                <td contenteditable="true">SUV</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">75,59</td>
+                <td class="text-right brutto-price">90,00</td>
+            </tr>
+            <tr data-fahrzeugart="Ducato" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(Transporter) Politur / Versiegelung</td>
+                <td contenteditable="true">- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td contenteditable="true">Ducato</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">180,00</td>
+                <td class="text-right brutto-price">214,20</td>
+            </tr>
+            <tr data-fahrzeugart="Womo" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(WOMO) Ceramic Langzeitversiegelung</td>
+                <td contenteditable="true">- Kunststoffpflege Ceramic Allround C0.01 hochwertige Keramikversiegelung (...) + Schutz des Klarlacks vor ätzenden und sauren Produkten (...)</td>
+                <td contenteditable="true">Womo</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">1764,71</td>
+                <td class="text-right brutto-price">2100,00</td>
+            </tr>
+            <tr data-fahrzeugart="Womo" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(WOMO) Ceramic Versiegelung</td>
+                <td contenteditable="true">Ceramic Allround C0.01 hochwertige Keramikversiegelung (...) + Schutz des Klarlacks vor ätzenden und sauren Produkten (...)</td>
+                <td contenteditable="true">Womo</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">1764,71</td>
+                <td class="text-right brutto-price">2100,00</td>
+            </tr>
+            <tr data-fahrzeugart="Womo" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(WOMO) Fahrzeuginnenreinigung</td>
+                <td contenteditable="true">Cockpitpflege (...) Scheibenreinigung (...) Teppichreinigung (...) Türfalzen Reinigung (...) Reinigung aller Staufächer</td>
+                <td contenteditable="true">Womo</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">168,03</td>
+                <td class="text-right brutto-price">200,00</td>
+            </tr>
+            <tr data-fahrzeugart="Womo" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(WOMO) Nano-Lack-Versiegelung</td>
+                <td contenteditable="true">Kunststoffpflege aller Außenteile (...) Nano-Beschichtung Nano-Versiegelung Scheibenreinigung</td>
+                <td contenteditable="true">Womo</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">1176,47</td>
+                <td class="text-right brutto-price">1400,00</td>
+            </tr>
+            <tr data-fahrzeugart="Womo" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(WOMO) Nano-Scheiben-Versiegelung</td>
+                <td contenteditable="true">Reinigung, Entfettung und Versiegelung der Windschutzscheibe im Außenbereich.</td>
+                <td contenteditable="true">Womo</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">126,05</td>
+                <td class="text-right brutto-price">150,00</td>
+            </tr>
+            <tr data-fahrzeugart="Womo" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(WOMO) Politur / Versiegelung</td>
+                <td contenteditable="true">- Kunststoffpflege - Lackpflege / Politur / Versiegelung - Kratzerentfernung Standard</td>
+                <td contenteditable="true">Womo</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">420,17</td>
+                <td class="text-right brutto-price">500,00</td>
+            </tr>
+            <tr data-fahrzeugart="Womo" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">(WOMO) Wohnmobilwäsche</td>
+                <td contenteditable="true">Fahrzeugwäsche inkl. Felgenreinigung von Hand</td>
+                <td contenteditable="true">Womo</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">210,08</td>
+                <td class="text-right brutto-price">250,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Arbeiten nach Aufwand</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">69,00</td>
+                <td class="text-right brutto-price">82,11</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Cabrioverdeck Versiegelung</td>
+                <td contenteditable="true">Versiegelung des Cabrioverdeckes</td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">32,77</td>
+                <td class="text-right brutto-price">39,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Cabrioverdeck-Reinigung</td>
+                <td contenteditable="true">Reinigung und Wäsche des Stoffverdecks</td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">50,42</td>
+                <td class="text-right brutto-price">60,00</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Dataport Tarif-Fahrzeuginnenreinigung</td>
+                <td contenteditable="true">- Innenreinigung - Reinigung aller Türfalzen - optionale Polsterreinigung - Cockpit-Pflege (...) - Hol- und Bringservice</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">70,58</td>
+                <td class="text-right brutto-price">84,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Dellenbeseitigung</td>
+                <td contenteditable="true">Dellenbeseitigung der ensprechenden Stellen</td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">75,63</td>
+                <td class="text-right brutto-price">90,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Demontage Werbebeschriftung</td>
+                <td contenteditable="true">Entfernung der Werbebeschriftung und Politur der betroffenen Fahrzeugteile (Je Bauteil)</td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">49,58</td>
+                <td class="text-right brutto-price">59,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Energiekosten Pauschale</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">16,81</td>
+                <td class="text-right brutto-price">20,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Fahrzeug Desinfektion</td>
+                <td contenteditable="true">Desinfektion gesamter Fahrzeug-Innenraum : Koch-Chemie Disinfection dient zur Desinfektion (...)</td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">150,00</td>
+                <td class="text-right brutto-price">178,50</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Fahrzeug-Desinfektion</td>
+                <td contenteditable="true">Desinfektion gesamte Fahrzeug Innenraum: Koch Chemie Desinfektion dient zur Desinfektion (...)</td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">300,00</td>
+                <td class="text-right brutto-price">357,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Fahrzeugwäsche Spezial</td>
+                <td contenteditable="true">Fahrzeugwäsche Spezial inkl. Felgenreinigung</td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">45,00</td>
+                <td class="text-right brutto-price">53,55</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Fahrzeugwäsche Transporter</td>
+                <td contenteditable="true">Fahrzeugwäsche Spezial inkl. Felgenreinigung</td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">60,00</td>
+                <td class="text-right brutto-price">71,40</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Fahrzeugwäsche normal</td>
+                <td contenteditable="true">Fahrzeugwäsche inkl. Felgenreinigung</td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">33,61</td>
+                <td class="text-right brutto-price">40,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Gutschein Code:</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">0,00</td>
+                <td class="text-right brutto-price">0,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Hol- und Bring-Service</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">25,00</td>
+                <td class="text-right brutto-price">29,75</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Klimafilter wechsel</td>
+                <td contenteditable="true">Austausch Pollenfilter inkl. Desinfektion der Lüftungskanäle</td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">57,98</td>
+                <td class="text-right brutto-price">69,00</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">LLUR Cockpitreinigung</td>
+                <td contenteditable="true">Reinigung aller Cockpit und Kunststoffteile im Innenbereich</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">19,50</td>
+                <td class="text-right brutto-price">23,21</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">LLUR Fahrzeuginnenreinigung</td>
+                <td contenteditable="true">- Aussaugen des Innenraums - Fußmatten ausklopfen - Beseitigung aller Abfälle (...) - Sichtkontrolle der zu reinigenden Fahrzeuge auf: Reifendruck, Motorölstand (...)</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">39,96</td>
+                <td class="text-right brutto-price">47,55</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">LLUR Fensterreinigung</td>
+                <td contenteditable="true">Reinigung aller Fahrzeugscheiben von Innen</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">19,50</td>
+                <td class="text-right brutto-price">23,21</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">LLUR Polsterreinigung</td>
+                <td contenteditable="true">Reinigung aller Sitzpolster mit Reinigungsmittel</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">18,00</td>
+                <td class="text-right brutto-price">21,42</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Mahngebühren</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">4,20</td>
+                <td class="text-right brutto-price">5,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Montage Werbebeschriftung</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">39,95</td>
+                <td class="text-right brutto-price">47,54</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Motorwäsche</td>
+                <td contenteditable="true">Reinigung Motor von oben per Hand so weit wie möglich mit entsprechenden Mitteln</td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,82</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="Innen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">OZON Behandlung</td>
+                <td contenteditable="true">OZON Behndlung des gsammten innenraumdes Fahrzeug</td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true">Innen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">58,77</td>
+                <td class="text-right brutto-price">70,00</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Reinigung Linoleumboden</td>
+                <td contenteditable="true">Vorreinigen mit dem Staubsauger , Reinigung und Pflege der Fußbodenflächen.</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">152,00</td>
+                <td class="text-right brutto-price">180,88</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Reinigung Lokomotive 4530108214/185</td>
+                <td contenteditable="true">Reinigungsarbeiten mit Hochruckreiniger vor Ort Dietrichstrasse 9, Kiel.</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">0,00</td>
+                <td class="text-right brutto-price">0,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="Außen">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Scheinwerfer Aufbereitung</td>
+                <td contenteditable="true">Scheinwerfer Instandsetzung Schleifarbeiten, Polieren und Beschichten</td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true">Außen</td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">84,03</td>
+                <td class="text-right brutto-price">100,00</td>
+            </tr>
+            <tr data-fahrzeugart="Sonstige" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Tankservice Siehe Quittungskopie</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Sonstige</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">0,00</td>
+                <td class="text-right brutto-price">0,00</td>
+            </tr>
+            <tr data-fahrzeugart="NA" data-ort="">
+                <td class="text-center" contenteditable="true"></td>
+                <td contenteditable="true">Verzugszinsen</td>
+                <td contenteditable="true">Bei Zahlungsverzug behalten wir uns vor, gemäß §288 BGB Abs. 2 Verzugszinsen in Höhe von 9 Prozentpunkten über dem Basiszinssatz zu berechnen.“ Rechnungbetrag * Verzugszinsen /100</td>
+                <td contenteditable="true">NA</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true">Stück</td>
+                <td>USt19</td>
+                <td class="text-right editable-price" contenteditable="true" oninput="updateBrutto(this)">0,00</td>
+                <td class="text-right brutto-price">0,00</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <script>
+        // --- Konstanten ---
+        const USt_SATZ = 1.19;
+
+        // --- 1. Initialisierung der Filteroptionen ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const table = document.getElementById('dataTable');
+            const rows = table.querySelectorAll('tbody tr');
+            const fahrzeugarten = new Set();
+            const orte = new Set();
+
+            rows.forEach(row => {
+                const fzArt = row.getAttribute('data-fahrzeugart');
+                const ort = row.getAttribute('data-ort');
+                if (fzArt) fahrzeugarten.add(fzArt);
+                if (ort) orte.add(ort);
+            });
+
+            // Füllt die Select-Box für Fahrzeugarten
+            const filterFzArt = document.getElementById('filterFahrzeugart');
+            [...fahrzeugarten].sort().forEach(art => {
+                const option = document.createElement('option');
+                option.value = art;
+                option.textContent = art === 'NA' ? 'Sonstige/Unbekannt' : art;
+                filterFzArt.appendChild(option);
+            });
+
+            // Füllt die Select-Box für Orte
+            const filterOrt = document.getElementById('filterOrt');
+            [...orte].sort().forEach(ort => {
+                const option = document.createElement('option');
+                option.value = ort;
+                option.textContent = ort === '' ? 'Unspezifiziert' : ort;
+                filterOrt.appendChild(option);
+            });
+            
+            // Initiales Setzen der Brutto-Preise (falls sie nachträglich bearbeitet werden)
+            rows.forEach(row => {
+                 const nettoCell = row.querySelector('.editable-price');
+                 if (nettoCell) {
+                     updateBrutto(nettoCell);
+                 }
+            });
+        });
+
+        // --- 2. Filterfunktion ---
+        window.filterTable = function() {
+            const selectedFzArt = document.getElementById('filterFahrzeugart').value;
+            const selectedOrt = document.getElementById('filterOrt').value;
+            const table = document.getElementById('dataTable');
+            const rows = table.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                const fzArt = row.getAttribute('data-fahrzeugart');
+                const ort = row.getAttribute('data-ort');
+
+                const matchesFzArt = !selectedFzArt || fzArt === selectedFzArt;
+                const matchesOrt = !selectedOrt || ort === selectedOrt;
+
+                if (matchesFzArt && matchesOrt) {
+                    row.style.display = ''; // Zeige Zeile
+                } else {
+                    row.style.display = 'none'; // Verstecke Zeile
+                }
+            });
+        };
+
+        // --- 3. Update Brutto-Preis Funktion ---
+        window.updateBrutto = function(nettoCell) {
+            const nettoValueText = nettoCell.textContent.replace(',', '.'); // Komma durch Punkt ersetzen
+            const nettoPrice = parseFloat(nettoValueText);
+            
+            // Die Brutto-Zelle ist die nächste Zelle (Index + 1)
+            const bruttoCell = nettoCell.nextElementSibling;
+
+            if (!isNaN(nettoPrice)) {
+                // Brutto = Netto * 1.19
+                const bruttoPrice = nettoPrice * USt_SATZ;
+                // Auf zwei Dezimalstellen runden und Komma zurück
+                bruttoCell.textContent = bruttoPrice.toFixed(2).replace('.', ',');
+            } else {
+                bruttoCell.textContent = "Ungültig";
+            }
+        };
+    </script>
+
+</body>
+</html>
