@@ -3,15 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DetailinSoft Dynamisch</title>
+    <title>DetailinSoft Dynamisch & Zentriert</title>
     <style>
         /* DYNAMISCHE SCHRIFTGRÖßEN MIT CLAMP UND VW */
-
-        /*
-         * clamp(MINIMALWERT, BEVORZUGTER_WERT_VW, MAXIMALWERT)
-         * Die Schriftgröße liegt immer zwischen dem Minimal- und Maximalwert.
-         * Der bevorzugte Wert (vw-Einheit) skaliert die Schrift fließend.
-         */
 
         /* BASE STYLES */
         body {
@@ -41,8 +35,7 @@
 
         /* Detailin - Soft (h1) */
         .header-content h1 {
-            /* Die Schriftgröße skaliert zwischen 40px und 100px, 
-               passt sich aber dynamisch mit 8vw an die Bildschirmbreite an. */
+            /* Fließende Größe: Min 40px, Bevorzugt 8vw, Max 100px */
             font-size: clamp(40px, 8vw, 100px);
             margin-bottom: 0.1em;
             line-height: 1.1;
@@ -50,8 +43,7 @@
 
         /* Willkommen (p) */
         .header-content p {
-            /* Die Schriftgröße skaliert zwischen 24px und 48px, 
-               passt sich aber dynamisch mit 3vw an die Bildschirmbreite an. */
+            /* Fließende Größe: Min 24px, Bevorzugt 3vw, Max 48px */
             font-size: clamp(24px, 3vw, 48px);
             margin-top: 0;
         }
@@ -62,7 +54,8 @@
             gap: 20px;
             margin-top: auto;
             justify-content: center;
-            padding-bottom: 40px;
+            /* HIER WIRD DER ABSTAND ZUM UNTEREN RAND ANGEPASST */
+            padding-bottom: 50px; 
         }
 
         .button {
@@ -89,7 +82,7 @@
             .footer-buttons {
                 flex-direction: column;
                 gap: 15px;
-                padding-bottom: 20px;
+                padding-bottom: 30px; /* Etwas weniger Abstand auf kleinen Bildschirmen */
                 width: 80%;
             }
 
