@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datensätze Dienstleistungen - Filterbar</title>
+    <title>Datensätze Dienstleistungen - Kurzansicht</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,15 +58,21 @@
             font-weight: bold;
             white-space: nowrap;
         }
-        td:nth-child(3) {
-            max-width: 300px;
-            word-wrap: break-word;
+
+        /* --- CSS-Regeln zum Ausblenden der Spalten --- */
+        /* Index 1: Dienstleistung, Index 2: Beschreibung, Index 5: Einheit, Index 6: Steuerart */
+        th:nth-child(2), td:nth-child(2),
+        th:nth-child(3), td:nth-child(3),
+        th:nth-child(6), td:nth-child(6),
+        th:nth-child(7), td:nth-child(7) {
+            display: none;
         }
+        /* ------------------------------------------- */
     </style>
 </head>
 <body>
 
-    <h2>Alle Dienstleistungs-Datensätze</h2>
+    <h2>Dienstleistungen - Kurzansicht</h2>
     
     <div class="filter-container">
         <label for="fahrzeugFilter">Nach Fahrzeugart filtern:</label>
