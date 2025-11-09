@@ -1,0 +1,38 @@
+name: Sync Supabase Data to JSON
+
+on:
+  # Führt die Action täglich um 02:00 Uhr aus
+  schedule:
+    - cron: '0 2 * * *'
+  # Erlaubt das manuelle Auslösen über die GitHub UI
+  workflow_dispatch:
+
+jobs:
+  sync_data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Supabase Client (optional, oder Skript-Abhängigkeiten)
+        # Wenn Sie ein lokales Node.js-Skript verwenden
+        run: npm install @supabase/supabase-js
+
+      - name: Run Data Fetch Script
+        # Dieses Skript muss die Daten von Supabase abrufen und die JSON-Datei neu schreiben
+        run: node scripts/fetchAndSync.js
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(data): Update services data from Supabase DB"
+          file_pattern: data/services.json # Stellt sicher, dass nur die Daten-Datei gepusht wird
+          skip_dirty_check: true
