@@ -76,16 +76,43 @@
             color: #007bff;
         }
 
-        /* --- CSS-Regeln zum Ausblenden der Spalten --- */
-        /* Index 4: Beschreibung (NEU ausgeblendet) */
+        /* --- CSS-Regeln zum Ausblenden der Spalten (NEU: Artikelnummer) --- */
+        /* Index 2: Artikelnummer (NEU ausgeblendet) */
+        /* Index 4: Beschreibung (bleibt ausgeblendet) */
         /* Index 7: Einheit, Index 8: Steuerart (bleiben ausgeblendet) */
+        th:nth-child(2), td:nth-child(2),
         th:nth-child(4), td:nth-child(4),
         th:nth-child(7), td:nth-child(7),
         th:nth-child(8), td:nth-child(8) {
             display: none;
         }
-        /* Index 3: Dienstleistung (jetzt SICHTBAR) */
         /* ------------------------------------------- */
+        
+        /* Druck-Stil: Blendet beim Drucken unnötige Elemente aus */
+        @media print {
+            .filter-container, input[type="checkbox"], input[type="number"] {
+                display: none;
+            }
+            body {
+                margin: 0;
+                box-shadow: none;
+            }
+            table {
+                box-shadow: none;
+            }
+            /* Zeige die Position Total Zelle (Index 11) beim Drucken an */
+            th:nth-child(11), td:nth-child(11) {
+                display: table-cell;
+            }
+            /* Passt die Spaltenbreite im Druckmodus an, da Auswahl, Menge wegfallen */
+            th, td {
+                padding: 5px 10px;
+            }
+            /* Beim Drucken nur ausgewählte Zeilen anzeigen */
+            tbody tr:not(.selected) {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -106,6 +133,9 @@
             <option value="Sonstige">Sonstige</option>
             <option value="NA">NA (Nicht angegeben/Klasse)</option>
         </select>
+        <button onclick="printProposal()" style="margin-left: 20px; padding: 8px 15px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Angebot drucken/exportieren 🖨️
+        </button>
     </div>
 
     <table id="dataTable">
@@ -196,7 +226,7 @@
             <tr data-fahrzeug="SUV" data-price="83.99"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(SUV) Nano-Scheiben-Versiegelung</td><td>Reinigung, Entfettung und Versiegelung der Windschutzscheibe (...)</td><td>SUV</td><td>Außen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">83,99</td><td class="vk-netto position-total">83,99</td></tr>
             <tr data-fahrzeug="SUV" data-price="117.65"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(SUV) Politur / Versiegelung</td><td>- Kunststoffpflege - Lackpflege / Politur (...)</td><td>SUV</td><td>Außen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">117,65</td><td class="vk-netto position-total">117,65</td></tr>
             <tr data-fahrzeug="SUV" data-price="67.18"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(SUV) Polsterreinigung</td><td>Reinigung Sitzpolster inkl. Fleckenentfnung</td><td>SUV</td><td>Innen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">67,18</td><td class="vk-netto position-total">67,18</td></tr>
-            <tr data-fahrzeug="SUV" data-price="75.59"><td><input type type="checkbox" onchange="calculateTotal()"></td><td></td><td>(SUV) Teppichaufbereitung</td><td>Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td><td>SUV</td><td>Innen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">75,59</td><td class="vk-netto position-total">75,59</td></tr>
+            <tr data-fahrzeug="SUV" data-price="75.59"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(SUV) Teppichaufbereitung</td><td>Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td><td>SUV</td><td>Innen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">75,59</td><td class="vk-netto position-total">75,59</td></tr>
             <tr data-fahrzeug="Ducato" data-price="180.00"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(Transporter) Politur / Versiegelung</td><td>- Kunststoffpflege - Lackpflege / Politur (...)</td><td>Ducato</td><td>Außen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">180,00</td><td class="vk-netto position-total">180,00</td></tr>
             <tr data-fahrzeug="Womo" data-price="1764.71"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(WOMO) Ceramic Langzeitversiegelung</td><td>- Kunststoffpflege Ceramic Allround C0.01 (...)</td><td>Womo</td><td>Außen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">1764,71</td><td class="vk-netto position-total">1764,71</td></tr>
             <tr data-fahrzeug="Womo" data-price="1764.71"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(WOMO) Ceramic Versiegelung</td><td>Ceramic Allround C0.01 hochwertige Keramikversiegelung (...)</td><td>Womo</td><td>Außen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">1764,71</td><td class="vk-netto position-total">1764,71</td></tr>
@@ -309,6 +339,12 @@
             document.getElementById('vatTotal').textContent = vatTotal.toFixed(2).replace('.', ',');
             document.getElementById('bruttoTotal').textContent = totalBrutto.toFixed(2).replace('.', ',');
         }
+        
+        // Funktion zum Drucken/Exportieren des Angebots
+        function printProposal() {
+            window.print();
+        }
+
 
         // Initialisiere die Berechnung und das Filtern beim Laden der Seite
         window.onload = function() {
