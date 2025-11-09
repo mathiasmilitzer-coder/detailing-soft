@@ -76,14 +76,15 @@
             color: #007bff;
         }
 
-        /* --- CSS-Regeln zum Ausblenden der Spalten (Artikelnummer ist jetzt sichtbar) --- */
-        /* Index 2: Dienstleistung (ausgeblendet), Index 3: Beschreibung, Index 6: Einheit, Index 7: Steuerart (bleiben ausgeblendet) */
-        th:nth-child(2), td:nth-child(2),
-        th:nth-child(3), td:nth-child(3),
-        th:nth-child(6), td:nth-child(6),
-        th:nth-child(7), td:nth-child(7) {
+        /* --- CSS-Regeln zum Ausblenden der Spalten --- */
+        /* Index 4: Beschreibung (NEU ausgeblendet) */
+        /* Index 7: Einheit, Index 8: Steuerart (bleiben ausgeblendet) */
+        th:nth-child(4), td:nth-child(4),
+        th:nth-child(7), td:nth-child(7),
+        th:nth-child(8), td:nth-child(8) {
             display: none;
         }
+        /* Index 3: Dienstleistung (jetzt SICHTBAR) */
         /* ------------------------------------------- */
     </style>
 </head>
@@ -195,7 +196,7 @@
             <tr data-fahrzeug="SUV" data-price="83.99"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(SUV) Nano-Scheiben-Versiegelung</td><td>Reinigung, Entfettung und Versiegelung der Windschutzscheibe (...)</td><td>SUV</td><td>Außen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">83,99</td><td class="vk-netto position-total">83,99</td></tr>
             <tr data-fahrzeug="SUV" data-price="117.65"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(SUV) Politur / Versiegelung</td><td>- Kunststoffpflege - Lackpflege / Politur (...)</td><td>SUV</td><td>Außen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">117,65</td><td class="vk-netto position-total">117,65</td></tr>
             <tr data-fahrzeug="SUV" data-price="67.18"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(SUV) Polsterreinigung</td><td>Reinigung Sitzpolster inkl. Fleckenentfnung</td><td>SUV</td><td>Innen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">67,18</td><td class="vk-netto position-total">67,18</td></tr>
-            <tr data-fahrzeug="SUV" data-price="75.59"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(SUV) Teppichaufbereitung</td><td>Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td><td>SUV</td><td>Innen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">75,59</td><td class="vk-netto position-total">75,59</td></tr>
+            <tr data-fahrzeug="SUV" data-price="75.59"><td><input type type="checkbox" onchange="calculateTotal()"></td><td></td><td>(SUV) Teppichaufbereitung</td><td>Aufbereitung des Teppich mit Pressluft, Tornador und Staubsauger</td><td>SUV</td><td>Innen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">75,59</td><td class="vk-netto position-total">75,59</td></tr>
             <tr data-fahrzeug="Ducato" data-price="180.00"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(Transporter) Politur / Versiegelung</td><td>- Kunststoffpflege - Lackpflege / Politur (...)</td><td>Ducato</td><td>Außen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">180,00</td><td class="vk-netto position-total">180,00</td></tr>
             <tr data-fahrzeug="Womo" data-price="1764.71"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(WOMO) Ceramic Langzeitversiegelung</td><td>- Kunststoffpflege Ceramic Allround C0.01 (...)</td><td>Womo</td><td>Außen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">1764,71</td><td class="vk-netto position-total">1764,71</td></tr>
             <tr data-fahrzeug="Womo" data-price="1764.71"><td><input type="checkbox" onchange="calculateTotal()"></td><td></td><td>(WOMO) Ceramic Versiegelung</td><td>Ceramic Allround C0.01 hochwertige Keramikversiegelung (...)</td><td>Womo</td><td>Außen</td><td>Stück</td><td>USt19</td><td><input type="number" min="1" value="1" onchange="calculateTotal()"></td><td class="vk-netto">1764,71</td><td class="vk-netto position-total">1764,71</td></tr>
@@ -242,7 +243,7 @@
     </div>
 
     <script>
-        // Funktion zum Filtern der Tabelle (vom vorherigen Code übernommen)
+        // Funktion zum Filtern der Tabelle
         function filterTable() {
             let selectedVehicle = document.getElementById("fahrzeugFilter").value;
             let table = document.getElementById("dataTable");
@@ -259,7 +260,7 @@
             }
         }
 
-        // NEUE Funktion zur Berechnung des Angebots
+        // Funktion zur Berechnung des Angebots
         function calculateTotal() {
             let totalNetto = 0;
             const VAT_RATE = 0.19;
@@ -291,14 +292,10 @@
                         }
                     } else {
                         row.classList.remove('selected');
-                        // Setze Position Total auf den Einzelpreis, falls Menge nicht geändert wurde,
-                        // oder auf 0, wenn nicht ausgewählt. Hier: nur den Einzelpreis, damit der VK sichtbar ist
-                        positionTotalCell.textContent = (price * (parseInt(quantityInput.value) || 1)).toFixed(2).replace('.', ',');
-                    }
-
-                    // Bei Änderungen der Menge auch checken, ob die Zeile ausgewählt ist
-                    if (quantity > 0 && checkbox.checked) {
-                        // Nichts tun, Berechnung läuft oben weiter
+                        // Zeige den Basis-Positionspreis (Einzelpreis * Menge) an, auch wenn nicht ausgewählt
+                        // (Macht die Anzeige konsistenter, wenn die Menge geändert wird, bevor man auswählt)
+                        const positionTotal = price * (quantity > 0 ? quantity : 1);
+                        positionTotalCell.textContent = positionTotal.toFixed(2).replace('.', ',');
                     }
                 }
             }
